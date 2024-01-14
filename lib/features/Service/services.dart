@@ -1,4 +1,4 @@
-import 'package:mc_queen_cargo/features/AtomicWidgets/atomic_service_component.dart';
+import 'package:mc_queen_cargo/features/Service/atomic_service_component.dart';
 import 'package:mc_queen_cargo/features/Model/adress_model.dart';
 import 'package:mc_queen_cargo/features/Model/authentication_model.dart';
 import 'package:mc_queen_cargo/features/Model/cargo_information_model.dart';
@@ -352,12 +352,13 @@ class Services {
     }
   }
     Future<CargoInformationModel> getTrackingCargo(
-      {required String accessToken, required String trackingNo}) async {
+      {required String accessToken, required String trackingNo,String? incoming}) async {
     try {
       var response = await ServiceProcess.getService(
         path: "$baseUrl/cargo/GetOneCargoWithTrackingNo",
         accessToken: accessToken,
         queryParameters: {"trackingNo": trackingNo},
+        incoming: incoming
       );
       return CargoInformationModel.fromJson(response);
     } catch (err) {

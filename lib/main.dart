@@ -1,31 +1,31 @@
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:mc_queen_cargo/features/AddAddress/create_address_page.dart';
-import 'package:mc_queen_cargo/features/Address/address_page.dart';
-import 'package:mc_queen_cargo/features/CargoDetail/CallCourierDetail/call_courier_detail_page.dart';
-import 'package:mc_queen_cargo/features/CargoDetail/cargo_detail_page.dart';
-import 'package:mc_queen_cargo/features/CargoPriceCalculate/ParcelSending/PriceDetail/price_detail_page.dart';
-import 'package:mc_queen_cargo/features/CargoPriceCalculate/ParcelSending/PriceInformation/price_information_page.dart';
-import 'package:mc_queen_cargo/features/CargoPriceCalculate/ParcelSending/package_sending_page.dart';
-import 'package:mc_queen_cargo/features/CargoPriceCalculate/ShipmentType/shipment_type_page.dart';
 import 'package:mc_queen_cargo/features/Controller/partner_controller.dart';
-import 'package:mc_queen_cargo/features/GetCourier/AddionatialService/additiona_service_page.dart';
-import 'package:mc_queen_cargo/features/GetCourier/Approve/approve_page.dart';
-import 'package:mc_queen_cargo/features/GetCourier/SelectedPostType/selected_post_type_page.dart';
-import 'package:mc_queen_cargo/features/GetCourier/get_courier_page.dart';
-import 'package:mc_queen_cargo/features/Login/login_page.dart';
-import 'package:mc_queen_cargo/features/Main/main_page.dart';
-import 'package:mc_queen_cargo/features/MyProfile/CustomerAddress/address_detail_page.dart';
-import 'package:mc_queen_cargo/features/MyProfile/ReceiverAddress/address_detail_page.dart';
-import 'package:mc_queen_cargo/features/MyProfile/UpdatePassword/update_password_page.dart';
-import 'package:mc_queen_cargo/features/MyProfile/UpdatePersonal/update_personal_page.dart';
-import 'package:mc_queen_cargo/features/MyProfile/my_profile_page.dart';
-import 'package:mc_queen_cargo/features/Register/ContactInformation/contact_information_page.dart';
-import 'package:mc_queen_cargo/features/Register/Password/password_page.dart';
-import 'package:mc_queen_cargo/features/Register/PersonalInformation/personal_information_page.dart';
-import 'package:mc_queen_cargo/features/Register/register_page.dart';
-import 'package:mc_queen_cargo/features/Splash/splash_screen_page.dart';
+import 'package:mc_queen_cargo/features/View/GetCourier/AddionatialService/additiona_service_page.dart';
+import 'package:mc_queen_cargo/features/View/GetCourier/Approve/approve_page.dart';
+import 'package:mc_queen_cargo/features/View/GetCourier/SelectedPostType/selected_post_type_page.dart';
+import 'package:mc_queen_cargo/features/View/GetCourier/get_courier_page.dart';
+import 'package:mc_queen_cargo/features/View/AddAddress/create_address_page.dart';
+import 'package:mc_queen_cargo/features/View/Address/address_page.dart';
+import 'package:mc_queen_cargo/features/View/CargoDetail/CallCourierDetail/call_courier_detail_page.dart';
+import 'package:mc_queen_cargo/features/View/CargoDetail/cargo_detail_page.dart';
+import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/ParcelSending/PriceDetail/price_detail_page.dart';
+import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/ParcelSending/PriceInformation/price_information_page.dart';
+import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/ParcelSending/package_sending_page.dart';
+import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/ShipmentType/shipment_type_page.dart';
+import 'package:mc_queen_cargo/features/View/Login/login_page.dart';
+import 'package:mc_queen_cargo/features/View/Main/main_page.dart';
+import 'package:mc_queen_cargo/features/View/MyProfile/CustomerAddress/address_detail_page.dart';
+import 'package:mc_queen_cargo/features/View/MyProfile/ReceiverAddress/address_detail_page.dart';
+import 'package:mc_queen_cargo/features/View/MyProfile/UpdatePassword/update_password_page.dart';
+import 'package:mc_queen_cargo/features/View/MyProfile/UpdatePersonal/update_personal_page.dart';
+import 'package:mc_queen_cargo/features/View/MyProfile/my_profile_page.dart';
+import 'package:mc_queen_cargo/features/View/Register/ContactInformation/contact_information_page.dart';
+import 'package:mc_queen_cargo/features/View/Register/Password/password_page.dart';
+import 'package:mc_queen_cargo/features/View/Register/PersonalInformation/personal_information_page.dart';
+import 'package:mc_queen_cargo/features/View/Register/register_page.dart';
+import 'package:mc_queen_cargo/features/View/Splash/splash_screen_page.dart';
 import 'package:mc_queen_cargo/main_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -63,6 +63,7 @@ class _MainAppState extends State<MainApp> with MainAppMixin {
           Obx(() => visibility.value ? defaultWidget() : notConnectionWidget()),
     );
   }
+
   GetMaterialApp defaultWidget() {
     return GetMaterialApp(
       localizationsDelegates: const [
@@ -178,9 +179,7 @@ class _MainAppState extends State<MainApp> with MainAppMixin {
       onInit: () async {
         await FirebaseMessaging.instance.requestPermission();
         FirebaseMessaging.onBackgroundMessage(
-          (message) async {
-            return Future.value(message);
-          },
+          (message) async {},
         );
       },
       theme: ThemeData(
