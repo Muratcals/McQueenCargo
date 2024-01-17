@@ -63,7 +63,6 @@ class _MainAppState extends State<MainApp> with MainAppMixin {
           Obx(() => visibility.value ? defaultWidget() : notConnectionWidget()),
     );
   }
-
   GetMaterialApp defaultWidget() {
     return GetMaterialApp(
       localizationsDelegates: const [
