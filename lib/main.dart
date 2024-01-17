@@ -64,6 +64,8 @@ class _MainAppState extends State<MainApp> with MainAppMixin {
     );
   }
 
+  
+
   GetMaterialApp defaultWidget() {
     return GetMaterialApp(
       localizationsDelegates: const [
@@ -177,6 +179,7 @@ class _MainAppState extends State<MainApp> with MainAppMixin {
             transition: Transition.rightToLeft),
       ],
       onInit: () async {
+        print(await FirebaseMessaging.instance.getToken());
         await FirebaseMessaging.instance.requestPermission();
         FirebaseMessaging.onBackgroundMessage(
           (message) async {},

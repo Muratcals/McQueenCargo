@@ -69,6 +69,7 @@ class ErrorResponse {
                         SizedBox(height: 10.h),
                         Container(
                           margin: CustomPadding.onlyHorizontalInset(50),
+                          height: 25.h,
                           child: AtomicOrangeButton(
                               onPressed: () {
                                 if (model.statusCode == 403) {
@@ -77,7 +78,9 @@ class ErrorResponse {
                                   Get.back();
                                 }
                               },
-                              title: model.statusCode == 403
+                              title: model.statusCode == 403 ||
+                                      (model.statusCode == 404 &&
+                                          model.incoming == "Customer")
                                   ? "Yeniden Başlat"
                                   : "Kapat"),
                         )
@@ -94,17 +97,7 @@ class ErrorResponse {
   }
 
   static ResponseErrorModel convertStatusCode(ResponseErrorModel model) {
-    if (model.statusCode == HttpStatus.ok) {
-      return ResponseErrorModel(
-          statusMessage: "İşlem başarıyla gerçekleştirilmiştir",
-          statusTitle: "Tamam");
-    } else if (model.statusCode == HttpStatus.created) {
-      return ResponseErrorModel(
-          statusMessage: "Başarıyla oluşturulmuştur",
-          statusTitle: "Oluşturuldu");
-    } else if (model.statusCode == HttpStatus.noContent) {
-      return ResponseErrorModel(statusMessage: "", statusTitle: "");
-    } else if (model.statusCode == HttpStatus.badRequest) {
+    if (model.statusCode == HttpStatus.badRequest) {
       return ResponseErrorModel(
           statusMessage:
               "Sunucu isteğinizi anlayamadı. Lütfen verileri düzgün doldurunuz",
@@ -123,10 +116,13 @@ class ErrorResponse {
         model.statusMessage =
             "Girdiğiniz takip numarası ile bir kargo bulunamadı.";
         model.statusTitle = "Bir hata oluştu";
-      } else {
+      } else if (model.incoming == "Customer") {
         model.statusMessage = "Kullanıcı bulunamadı";
         model.statusTitle = "Bir hata oluştu";
         _deleteCustomer();
+      } else if (model.incoming == "Login") {
+        model.statusMessage = "Kullanıcı adı veya şifre hatalı";
+        model.statusTitle = "Hatalı giriş";
       }
       return model;
     } else if (model.statusCode == HttpStatus.requestTimeout) {
@@ -156,7 +152,7 @@ class ErrorResponse {
     } else if (model.statusCode == HttpStatus.gatewayTimeout) {
       return ResponseErrorModel(
           statusMessage:
-              " Sunucu, başka bir sunucudan zamanında yanıt alamadı. Lütfen tekrar deneyin",
+              "Sunucu, başka bir sunucudan zamanında yanıt alamadı. Lütfen tekrar deneyin",
           statusTitle: "Zaman aşımı");
     } else {
       return ResponseErrorModel(

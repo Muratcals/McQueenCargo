@@ -69,7 +69,7 @@ class LoginPageWidget {
             "password": password
           };
           await service
-              .login(model, controller.accessToken.value)
+              .login(model, controller.accessToken.value,"Login")
               .then((value) async {
             await saveDatabase(value.id!);
             EasyLoading.showToast("Giriş başarılı");

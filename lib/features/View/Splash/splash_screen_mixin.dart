@@ -3,7 +3,6 @@ import 'package:mc_queen_cargo/features/Model/authentication_model.dart';
 import 'package:mc_queen_cargo/features/Model/login_model.dart';
 import 'package:mc_queen_cargo/features/Service/services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:mc_queen_cargo/features/View/Splash/splash_screen_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,14 +74,6 @@ mixin SplashScreenMixin on State<SplashScreen> {
       await service.getCustomerInformation(userId, accessToken).then((value) {
         controller.userInformation.value = value;
         Get.offAllNamed("/main", arguments: {"userId": 0});
-      }).onError((error, stackTrace) {
-        if (error == ("Not Found")) {
-          deleteCustomer();
-          controller.userInformation.value = LoginModel();
-          Get.offAllNamed("/main", arguments: {"userId": 0});
-        } else {
-          refreshTokenProcess();
-        }
       });
     }
   }
