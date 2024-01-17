@@ -2,7 +2,6 @@ import 'package:mc_queen_cargo/features/AtomicWidgets/atomic_orange_button.dart'
 import 'package:mc_queen_cargo/features/AtomicWidgets/atomic_progreess_page.dart';
 import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mc_queen_cargo/features/View/Register/register_mixin.dart';
@@ -57,9 +56,7 @@ class _RegisterPageState extends State<RegisterPage> with RegisterMixin {
       visibilty.value = true;
       await service
           .createCustomer(
-        controller.customerModel,
-        controller.accessToken.value,
-      )
+              controller.customerModel, controller.accessToken.value)
           .then((value) {
         Get.offAllNamed("/loginPage");
       }).onError((error, stackTrace) {});

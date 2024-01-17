@@ -115,7 +115,7 @@ class _CargoPricaCalculatePageState extends State<CargoPricaCalculatePage>
           InkWell(
             onTap: () async {
               var result = await Get.toNamed("/addressPage",
-                  arguments: {"incoming": "recevier", "process": "getCourier"});
+                  arguments: {"incoming": "receiver", "process": "getCourier"});
               if (result != null) {
                 recevierAddressModel = result;
                 setState(() {});

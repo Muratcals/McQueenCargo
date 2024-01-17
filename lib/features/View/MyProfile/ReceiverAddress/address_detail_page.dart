@@ -29,7 +29,7 @@ class _ReceiverAddressInformationPageState
           child: (getModel) {
             ReceiverAddressModel model = getModel;
             return SingleChildScrollView(
-              physics: ScrollPhysics(),
+              physics:const ScrollPhysics(),
               child: Column(
                 children: [
                   Container(

@@ -1,6 +1,4 @@
 import 'package:mc_queen_cargo/features/Model/login_model.dart';
-import 'package:mc_queen_cargo/features/Service/response_error.dart';
-
 import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
 import 'package:mc_queen_cargo/features/View/MyProfile/my_profile_mixin.dart';
 import 'package:mc_queen_cargo/main_mixin.dart';
@@ -118,6 +116,7 @@ class _MyProfilePageState extends State<MyProfilePage> with MyProfileMixin {
         controller.currentAuth.value = 0;
         controller.userInformation.value = LoginModel();
         controller.selectedBottomSheet.value = "main";
+        EasyLoading.showToast("Başarıyla çıkış yapıldı");
         Get.offAndToNamed("/main", arguments: {"userId": 0});
       },
       child: Container(

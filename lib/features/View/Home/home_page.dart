@@ -1,8 +1,8 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
 import 'package:mc_queen_cargo/features/View/Home/home_page_mixin.dart';
 import 'package:mc_queen_cargo/main_mixin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -44,15 +44,22 @@ class _HomePageState extends State<HomePage> with HomePageMixin {
               color: Colors.black, fontFamily: "times", fontSize: 13.sp),
           suffixIcon: IconButton(
               onPressed: () async {
-                await service
-                    .getTrackingCargo(
-                        accessToken: controller.accessToken.value,
-                        trackingNo: trackingNo,
-                        incoming: "Cargo")
-                    .then((value) {
-                  Get.toNamed("cargoDetailPage",
-                      arguments: {"cargoId": value.id});
-                });
+                if (trackingNo.isEmpty) {
+                  EasyLoading.showToast("Lütfen bir kargo numarası giriniz");
+                } else {
+                  await service
+                      .getTrackingCargo(
+                          accessToken: controller.accessToken.value,
+                          trackingNo: trackingNo,
+                          incoming: "Cargo")
+                      .then((value) {
+                    setState(() {
+                      trackingNo = "";
+                    });
+                    Get.toNamed("cargoDetailPage",
+                        arguments: {"cargoId": value.id});
+                  });
+                }
               },
               icon: const Icon(Icons.search)),
         ),

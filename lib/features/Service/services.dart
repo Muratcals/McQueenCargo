@@ -39,9 +39,10 @@ class Services {
   Future<String> createCustomer(LoginModel model, String accessToken) async {
     try {
       await ServiceProcess.postService(
-          path: "$baseUrl/customerMobil",
-          data: loginModelToJson(model),
-          accessToken: accessToken);
+        path: "$baseUrl/customerMobil",
+        data: loginModelToJson(model),
+        accessToken: accessToken,
+      );
       return "Kullanıcı başarıyla oluşturuldu";
     } catch (err) {
       return Future.error(err.toString());
@@ -49,12 +50,13 @@ class Services {
   }
 
   Future<LoginModel> login(
-      Map<String, String> model, String accessToken) async {
+      Map<String, String> model, String accessToken, String? incoming) async {
     try {
       var result = await ServiceProcess.postService(
           path: "$baseUrl/customerMobil/login",
           data: model,
-          accessToken: accessToken);
+          accessToken: accessToken,
+          incoming: incoming);
       return LoginModel.fromJson(result);
     } catch (err) {
       return Future.error(err.toString());
@@ -65,9 +67,10 @@ class Services {
       int userId, String accessToken) async {
     try {
       var response = await ServiceProcess.getService(
-          path: "$baseUrl/customerMobil/GetOneCustomerId",
-          queryParameters: {"id": userId},
-          accessToken: accessToken);
+        path: "$baseUrl/customerMobil/GetOneCustomerId",
+        queryParameters: {"id": userId},
+        accessToken: accessToken,
+      );
       return LoginModel.fromJson(response);
     } catch (err) {
       return Future.error(err.toString());
@@ -339,7 +342,9 @@ class Services {
   }
 
   Future<CallCourierModel> getOneCallCourier(
-      {required String accessToken, required int cargoId}) async {
+      {required String accessToken,
+      required int cargoId,
+      String? incoming}) async {
     try {
       var response = await ServiceProcess.getService(
         path: "$baseUrl/callcourier/CallCourierId",
@@ -351,18 +356,16 @@ class Services {
       return Future.error(err.toString());
     }
   }
-    Future<CargoInformationModel> getTrackingCargo(
-      {required String accessToken, required String trackingNo,String? incoming}) async {
-    try {
-      var response = await ServiceProcess.getService(
+
+  Future<CargoInformationModel> getTrackingCargo(
+      {required String accessToken,
+      required String trackingNo,
+      String? incoming}) async {
+    var response = await ServiceProcess.getService(
         path: "$baseUrl/cargo/GetOneCargoWithTrackingNo",
         accessToken: accessToken,
         queryParameters: {"trackingNo": trackingNo},
-        incoming: incoming
-      );
-      return CargoInformationModel.fromJson(response);
-    } catch (err) {
-      return Future.error(err.toString());
-    }
+        incoming: incoming);
+    return CargoInformationModel.fromJson(response);
   }
 }

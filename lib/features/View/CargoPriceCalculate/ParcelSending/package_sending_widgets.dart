@@ -127,6 +127,17 @@ class _PackageSendingPageWidgetsState extends State<PackageSendingPageWidgets>
               networkIcon,
               width: 80.w,
               height: 80.h,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                );
+              },
             ),
             SizedBox(width: 5.w),
           ],
