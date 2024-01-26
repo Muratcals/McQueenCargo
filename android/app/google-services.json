@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "639272645378",
+    "project_id": "mcqueencargo-858dd",
+    "storage_bucket": "mcqueencargo-858dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639272645378:android:0acf4236e5d6c14c97c81b",
+        "android_client_info": {
+          "package_name": "om.example.mc_queen_cargo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpaVwdQqugEk-f0BVApOvIR8WdRag1CeI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
