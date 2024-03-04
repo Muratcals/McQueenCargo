@@ -1,10 +1,16 @@
+import 'package:get/get.dart';
 import 'package:mc_queen_cargo/features/AtomicWidgets/atomic_future_builder.dart';
+import 'package:mc_queen_cargo/features/Controller/partner_controller.dart';
+import 'package:mc_queen_cargo/features/Model/adress_model.dart';
+import 'package:mc_queen_cargo/features/Model/receiver_address_model.dart';
 import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
 import 'package:mc_queen_cargo/features/View/Address/address_mixin.dart';
 import 'package:mc_queen_cargo/main_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:searchable_listview/searchable_listview.dart';
+
+part '../Address/address_widgets.dart';
 
 class AddressPage extends StatefulWidget {
   const AddressPage({super.key});
@@ -19,19 +25,24 @@ class _AddressPageState extends State<AddressPage> with AddressMixin {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
-        leading: appBarIcon(),
-        toolbarHeight: 30.h,
-        flexibleSpace: appbarFlexibleSpace(),
-        title: textWidget(
-            title: incoming.contains("customer")
-                ? "Gönderici Adresi Seçimi"
-                : "Alıcı Adresi Seçimi",
-            fontsize: 14.sp,
-            color: Colors.white),
-        bottom: widgets.appBarBottomItem(incoming, () {
-          setState(() {});
-        }),
-      ),
+          leading: AppBarIcon(),
+          toolbarHeight: 30.h,
+          flexibleSpace: AppbarFlexibleSpace(),
+          title: GeneralTextWidget(
+              title: incoming.contains("customer")
+                  ? "Gönderici Adresi Seçimi"
+                  : "Alıcı Adresi Seçimi",
+              fontsize: 14.sp,
+              color: Colors.white),
+          bottom: PreferredSize(
+            preferredSize: Size((Get.width * 90) / 100, 30.h),
+            child: _AppBarBottomItem(
+              incoming: incoming,
+              reload: () {
+                setState(() {});
+              },
+            ),
+          )),
       body: addressPageBody(),
     );
   }
@@ -58,7 +69,7 @@ class _AddressPageState extends State<AddressPage> with AddressMixin {
       autoFocusOnSearch: false,
       inputDecoration: InputDecoration(
         prefixIcon: const Icon(Icons.search),
-        suffix: textWidget(title: "", fontsize: 12),
+        suffix: const GeneralTextWidget(title: "", fontsize: 12),
         hintText: "Arayın",
         contentPadding: EdgeInsets.symmetric(vertical: 0.r),
         border: OutlineInputBorder(
@@ -76,7 +87,7 @@ class _AddressPageState extends State<AddressPage> with AddressMixin {
         return Column(
           children: [
             incoming.contains("customer")
-                ? widgets.customerAddresslistItems(
+                ? _CustomerAddresslistItems(
                     item: customerAddressList[itemIndex],
                     process: process,
                     setStatePage: (state) {
@@ -85,7 +96,7 @@ class _AddressPageState extends State<AddressPage> with AddressMixin {
                       }
                     },
                   )
-                : widgets.receiverAddresslistItems(
+                : _ReceiverAddresslistItems(
                     item: receiverAddressList[itemIndex],
                     process: process,
                     setStatePage: (state) {

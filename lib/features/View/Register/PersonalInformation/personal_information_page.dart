@@ -1,9 +1,17 @@
+import 'package:date_field/date_field.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:mc_queen_cargo/features/AtomicWidgets/atomic_orange_button.dart';
+import 'package:mc_queen_cargo/features/AtomicWidgets/atomic_textformfield.dart';
+import 'package:mc_queen_cargo/features/Controller/partner_controller.dart';
 import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mc_queen_cargo/features/View/Register/PersonalInformation/personal_information_mixin.dart';
+import 'package:mc_queen_cargo/main_mixin.dart';
+
+part '../PersonalInformation/personal_information_widgets.dart';
 
 class PersonalInformationPage extends StatefulWidget {
   const PersonalInformationPage({super.key});
@@ -19,7 +27,7 @@ class _PersonalInformationPageState extends State<PersonalInformationPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      appBar: widgets.appBar(),
+      appBar: PreferredSize(preferredSize: Size(30.w, 30.h), child: _AppBar()),
       body: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -30,22 +38,17 @@ class _PersonalInformationPageState extends State<PersonalInformationPage>
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  widgets.nameWidget(),
+                  _NameTextField(),
                   SizedBox(height: 15.h),
-                  widgets.lastNameWidget(),
+                  _LastNameTextField(),
                   SizedBox(height: 15.h),
-                  widgets.tcNumberWidget(),
+                  _TcNumberTextField(),
                   SizedBox(height: 15.h),
-                  widgets.dateTimeWidget(context),
+                  _DateTimeField(),
                   SizedBox(height: 15.h),
                   AtomicOrangeButton(
                       onPressed: () {
-                        var isValidate = key.currentState!.validate();
-                        if (isValidate) {
-                          key.currentState!.save();
-                          FocusScope.of(context).unfocus();
-                          Get.toNamed("/contactInformationPage");
-                        }
+                        onPressed();
                       },
                       title: "Devam Et")
                 ],

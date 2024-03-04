@@ -19,7 +19,6 @@ class PackageSendingPage extends StatefulWidget {
 
 class _PackageSendingPageState extends State<PackageSendingPage> {
   String incoming = Get.arguments["incoming"];
-  PartnerController controller = Get.find();
   Services service = Services();
 
   @override
@@ -32,16 +31,18 @@ class _PackageSendingPageState extends State<PackageSendingPage> {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
       appBar: appBar(),
-      body: AtomicFutureBuilder(
-        future: service.getCargoParcelTypeModel(controller.accessToken.value),
-        child: (_) {
-          List<CargoParcelTypeModel> model = _;
-          return PackageSendingPageWidgets(
-            model: model,
-            incoming: incoming,
-          );
-        },
-      ),
+      body: GetBuilder<PartnerController>(builder: (controller) {
+        return AtomicFutureBuilder(
+          future: service.getCargoParcelTypeModel(controller.accessToken.value),
+          child: (_) {
+            List<CargoParcelTypeModel> model = _;
+            return PackageSendingPageWidgets(
+              model: model,
+              incoming: incoming,
+            );
+          },
+        );
+      }),
     );
   }
 
@@ -50,17 +51,17 @@ class _PackageSendingPageState extends State<PackageSendingPage> {
       title: Container(
         margin: CustomPadding.only(right: 10),
         alignment: Alignment.center,
-        child: textWidget(
+        child: GeneralTextWidget(
             title: incoming.contains("calculate")
                 ? "Paket Özeti"
                 : "Gönderi Tipi Seçimi",
             fontsize: 13.sp,
             color: Colors.white),
       ),
-      flexibleSpace: appbarFlexibleSpace(),
+      flexibleSpace: AppbarFlexibleSpace(),
       centerTitle: true,
       toolbarHeight: 27.h,
-      leading: appBarIcon(),
+      leading: AppBarIcon(),
       actions: [
         InkWell(
           onTap: () {
@@ -71,7 +72,7 @@ class _PackageSendingPageState extends State<PackageSendingPage> {
           child: Container(
               alignment: Alignment.center,
               margin: CustomPadding.only(right: 10),
-              child: textWidget(
+              child: GeneralTextWidget(
                   title: "İptal", fontsize: 14.sp, color: Colors.white)),
         )
       ],
@@ -79,6 +80,7 @@ class _PackageSendingPageState extends State<PackageSendingPage> {
   }
 
   void resetAdditionalService() {
+    PartnerController controller = Get.find();
     controller.packageProcurementServices.clear();
     controller.packageProcurementServices.addAll([
       AdditionalServiceModel(name: "Adresten Alım", price: 24.46),

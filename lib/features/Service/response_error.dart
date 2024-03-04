@@ -36,7 +36,7 @@ class ErrorResponse {
               canPop: false,
               child: Scaffold(
                 appBar: AppBar(
-                  flexibleSpace: appbarFlexibleSpace(),
+                  flexibleSpace: AppbarFlexibleSpace(),
                   leading: Container(),
                   actions: [
                     IconButton(
@@ -49,7 +49,7 @@ class ErrorResponse {
                         ))
                   ],
                   centerTitle: true,
-                  title: textWidget(
+                  title: GeneralTextWidget(
                       title: model.statusTitle ?? "",
                       fontsize: 14.sp,
                       color: Colors.white),

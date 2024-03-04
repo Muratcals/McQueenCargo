@@ -1,21 +1,13 @@
-import 'package:mc_queen_cargo/features/View/GetCourier/get_courier_mixin.dart';
-import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
-import 'package:mc_queen_cargo/main_mixin.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+part of '../GetCourier/get_courier_page.dart';
 
-class GetCourierWidegets extends StatefulWidget {
-  const GetCourierWidegets({super.key});
+class _GetCourierBody extends StatefulWidget {
+  const _GetCourierBody();
 
   @override
-  State<GetCourierWidegets> createState() => _GetCourierWidegetsState();
+  State<_GetCourierBody> createState() => _GetCourierBodyState();
 }
 
-class _GetCourierWidegetsState extends State<GetCourierWidegets>
-    with GetCourierMixin {
+class _GetCourierBodyState extends State<_GetCourierBody> with GetCourierMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,20 +17,37 @@ class _GetCourierWidegetsState extends State<GetCourierWidegets>
         mainAxisSize: MainAxisSize.max,
         children: [
           SizedBox(height: 40.h),
-          selectedAddressContainer(),
+          _SelectedAddressContainer(
+            customerAddresssModel: customerAddresssModel,
+            receiverAddressModel: receiverAddressModel,
+          ),
           SizedBox(height: 30.h),
           Obx(
             () => receiverAddressModel.value.id != null &&
                     customerAddresssModel.value.id != null
-                ? bottomContainer()
+                ? _BottomContainer(
+                    carouselController: carouselController,
+                    selectedDate: selectedDate,
+                  )
                 : Container(),
           )
         ],
       ),
     );
   }
+}
 
-  Container bottomContainer() {
+class _BottomContainer extends StatelessWidget {
+  const _BottomContainer({
+    required this.carouselController,
+    required this.selectedDate,
+  });
+
+  final CarouselController carouselController;
+  final RxInt selectedDate;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: CustomPadding.onlyHorizontalInset(15),
       padding: CustomPadding.allInset(15),
@@ -46,201 +55,218 @@ class _GetCourierWidegetsState extends State<GetCourierWidegets>
         borderRadius: BorderRadius.circular(5.r),
         border: Border.all(color: Colors.grey, width: 0.5),
       ),
-      child: bottomContainerColumn(),
+      child: _BottomContainerColumn(
+        carouselController: carouselController,
+        selectedDate: selectedDate,
+      ),
     );
   }
+}
 
-  Column bottomContainerColumn() {
+class _BottomContainerColumn extends StatelessWidget {
+  const _BottomContainerColumn({
+    required this.carouselController,
+    required this.selectedDate,
+  });
+
+  final CarouselController carouselController;
+  final RxInt selectedDate;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CarouselSlider(
-          carouselController: carouselController,
-          items: [
-            selectedDateWidget(),
-            selectedCargoTypeWidget(),
-          ],
-          options: CarouselOptions(
-            autoPlay: false,
-            enlargeCenterPage: true,
-            enableInfiniteScroll: false,
-            viewportFraction: 0.9,
-            aspectRatio: 1.5,
-            initialPage: 0,
+        Obx(
+          () => CarouselSlider(
+            carouselController: carouselController,
+            items: [
+              _SelectedDateWidget(
+                  carouselController: carouselController,
+                  selectedDate: selectedDate),
+              _SelectedCargoType(),
+            ],
+            disableGesture: true,
+            options: CarouselOptions(
+                autoPlay: false,
+                enlargeCenterPage: true,
+                enableInfiniteScroll: false,
+                viewportFraction: 0.9,
+                aspectRatio: 1.4,
+                initialPage: 0,
+                scrollPhysics:
+                    selectedDate.value == 0 ? const NeverScrollableScrollPhysics() : null),
           ),
         )
       ],
     );
   }
+}
 
-  Widget selectedDateWidget() {
-    return Column(
-      children: [
-        Text(
-          "Gönderiniz hangi tarihte göndermek istiyorsunuz",
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.black, fontSize: 15.sp),
-        ),
-        SizedBox(height: 3.h),
-        Divider(
-          color: Colors.grey,
-          height: 1.h,
-        ),
-        SizedBox(height: 3.h),
-        Container(
-          padding: CustomPadding.symmetricInset(10, 5),
-          child: Obx(() => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                      onTap: () {
-                        carouselController.nextPage();
-                        selectedDate.value = 1;
-                        controller.getCourierModel.value.cargoRealeseDate =
-                            DateTime.now();
-                      },
-                      child: dateWidget("Bugün", DateTime.now(), 1)),
-                  InkWell(
+class _SelectedDateWidget extends StatelessWidget {
+  const _SelectedDateWidget({
+    required this.carouselController,
+    required this.selectedDate,
+  });
+
+  final CarouselController carouselController;
+  final RxInt selectedDate;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return Column(
+        children: [
+          Text(
+            "Gönderiniz hangi tarihte göndermek istiyorsunuz",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.black, fontSize: 15.sp),
+          ),
+          SizedBox(height: 3.h),
+          Divider(
+            color: Colors.grey,
+            height: 1.h,
+          ),
+          SizedBox(height: 3.h),
+          Container(
+            padding: CustomPadding.symmetricInset(10, 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
                     onTap: () {
                       carouselController.nextPage();
-                      selectedDate.value = 2;
+                      selectedDate.value = 1;
                       controller.getCourierModel.value.cargoRealeseDate =
-                          DateTime.now().add(const Duration(days: 1));
+                          DateTime.now();
                     },
-                    child: dateWidget("Yarın",
-                        DateTime.now().add(const Duration(days: 1)), 2),
-                  )
-                ],
-              )),
-        ),
-      ],
-    );
-  }
-
-  Container dateWidget(String title, DateTime date, int selectedValue) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.r),
-          border: Border.all(color: Colors.green, width: 1.h),
-          color: selectedDate.value == selectedValue
-              ? Colors.green
-              : Colors.white),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            padding: CustomPadding.symmetricInset(30, 3),
-            color: Colors.white,
-            child:
-                textWidget(title: title, fontsize: 14.sp, color: Colors.grey),
+                    child: _DateView(
+                      title: "Bugün",
+                      date: DateTime.now(),
+                      selectedValue: 1,
+                      selectedDate: selectedDate,
+                    )),
+                InkWell(
+                  onTap: () {
+                    carouselController.nextPage();
+                    selectedDate.value = 2;
+                    controller.getCourierModel.value.cargoRealeseDate =
+                        DateTime.now().add(const Duration(days: 1));
+                  },
+                  child: _DateView(
+                    title: "Yarın",
+                    date: DateTime.now().add(const Duration(days: 1)),
+                    selectedValue: 2,
+                    selectedDate: selectedDate,
+                  ),
+                )
+              ],
+            ),
           ),
-          Container(
-            padding: CustomPadding.onlyHorizontalInset(25),
-            child: textWidget(
-                title: monthConverter(date.month),
-                fontsize: 15.sp,
-                color: selectedDate.value == selectedValue
-                    ? Colors.white
-                    : Colors.green),
-          ),
-          textWidget(
-              title: date.day.toString(),
-              fontsize: 35.sp,
-              fontWeight: FontWeight.bold,
-              color: selectedDate.value == selectedValue
-                  ? Colors.white
-                  : Colors.green),
-          textWidget(
-              title: DateFormat('EEEE', "tr").format(date),
-              fontsize: 13.sp,
-              fontWeight: FontWeight.normal,
-              color: selectedDate.value == selectedValue
-                  ? Colors.white
-                  : Colors.green),
-          SizedBox(
-            height: 4.h,
-          )
         ],
-      ),
-    );
+      );
+    });
   }
+}
 
-  Container selectedAddressContainer() {
-    return Container(
-      padding: CustomPadding.allInset(5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.r),
-        border: Border.all(color: Colors.grey, width: 0.5),
-        color: Colors.white,
-      ),
-      margin: CustomPadding.onlyHorizontalInset(30),
-      child: Obx(
-        () => Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            InkWell(
-              onTap: () async {
-                var model = await Get.toNamed("/addressPage", arguments: {
-                  "incoming": "customer",
-                  "process": "getCourier"
-                });
-                if (model != null) {
-                  customerAddresssModel.value = model;
-                  controller.getCourierModel.value.customerMobilAdressId =
-                      customerAddresssModel.value.id;
-                }
-              },
-              child: Container(
-                padding: CustomPadding.allInset(5),
-                child: selectedAddressColumnItem(
-                    icon: "images/future_location_icon.png",
-                    title: customerAddresssModel.value.title ??
-                        "Gönderici Adresi Seçiniz",
-                    district: customerAddresssModel.value.districtName,
-                    provinceName: customerAddresssModel.value.provinceName),
-              ),
-            ),
-            SizedBox(height: 5.h),
-            Divider(
-              color: Colors.grey,
-              height: 1.h,
-            ),
-            SizedBox(height: 5.h),
-            InkWell(
-              onTap: () async {
-                var model = await Get.toNamed("/addressPage", arguments: {
-                  "incoming": "receiver",
-                  "process": "getCourier"
-                });
-                if (model != null) {
-                  receiverAddressModel.value = model;
-                  controller.getCourierModel.value.receiverId =
-                      receiverAddressModel.value.id;
-                }
-              },
-              child: Container(
-                padding: CustomPadding.allInset(5),
-                child: selectedAddressColumnItem(
-                    icon: "images/is_will_location_icon.png",
-                    title: receiverAddressModel.value.title ??
-                        "Alıcı Adresi Seçiniz",
-                    district: receiverAddressModel.value.districtName,
-                    provinceName: receiverAddressModel.value.provinceName),
-              ),
-            ),
-          ],
+class _SelectedAddressContainer extends StatelessWidget {
+  const _SelectedAddressContainer({
+    required this.customerAddresssModel,
+    required this.receiverAddressModel,
+  });
+
+  final Rx<AddressModel> customerAddresssModel;
+  final Rx<ReceiverAddressModel> receiverAddressModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return Container(
+        padding: CustomPadding.allInset(5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.r),
+          border: Border.all(color: Colors.grey, width: 0.5),
+          color: Colors.white,
         ),
-      ),
-    );
+        margin: CustomPadding.onlyHorizontalInset(30),
+        child: Obx(
+          () => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              InkWell(
+                onTap: () async {
+                  var model = await Get.toNamed("/addressPage", arguments: {
+                    "incoming": "customer",
+                    "process": "getCourier"
+                  });
+                  if (model != null) {
+                    customerAddresssModel.value = model;
+                    controller.getCourierModel.value.customerMobilAdressId =
+                        customerAddresssModel.value.id;
+                  }
+                },
+                child: Container(
+                  padding: CustomPadding.allInset(5),
+                  child: _SelectedAddressColumnItem(
+                      icon: "images/future_location_icon.png",
+                      title: customerAddresssModel.value.title ??
+                          "Gönderici Adresi Seçiniz",
+                      district: customerAddresssModel.value.districtName,
+                      provinceName: customerAddresssModel.value.provinceName),
+                ),
+              ),
+              SizedBox(height: 5.h),
+              Divider(
+                color: Colors.grey,
+                height: 1.h,
+              ),
+              SizedBox(height: 5.h),
+              InkWell(
+                onTap: () async {
+                  var model = await Get.toNamed("/addressPage", arguments: {
+                    "incoming": "receiver",
+                    "process": "getCourier"
+                  });
+                  if (model != null) {
+                    receiverAddressModel.value = model;
+                    controller.getCourierModel.value.receiverId =
+                        receiverAddressModel.value.id;
+                  }
+                },
+                child: Container(
+                  padding: CustomPadding.allInset(5),
+                  child: _SelectedAddressColumnItem(
+                      icon: "images/is_will_location_icon.png",
+                      title: receiverAddressModel.value.title ??
+                          "Alıcı Adresi Seçiniz",
+                      district: receiverAddressModel.value.districtName,
+                      provinceName: receiverAddressModel.value.provinceName),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
   }
+}
 
-  Row selectedAddressColumnItem(
-      {required String icon,
-      required String title,
-      String? district,
-      String? provinceName}) {
+class _SelectedAddressColumnItem extends StatelessWidget {
+  const _SelectedAddressColumnItem({
+    required this.icon,
+    required this.title,
+    this.district,
+    this.provinceName,
+  });
+  final String icon;
+  final String title;
+  final String? district;
+  final String? provinceName;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -256,11 +282,11 @@ class _GetCourierWidegetsState extends State<GetCourierWidegets>
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
-            textWidget(
+            GeneralTextWidget(
                 title: title, fontsize: 13.sp, fontWeight: FontWeight.bold),
             district == null
                 ? Container()
-                : textWidget(
+                : GeneralTextWidget(
                     title: "$district/$provinceName",
                     fontsize: 14.sp,
                     fontWeight: FontWeight.normal),
@@ -274,8 +300,158 @@ class _GetCourierWidegetsState extends State<GetCourierWidegets>
       ],
     );
   }
+}
 
-  Column cargoTypeWidget({required String icon, required String title}) {
+class _DateView extends StatelessWidget {
+  _DateView({
+    required this.selectedValue,
+    required this.title,
+    required this.date,
+    required this.selectedDate,
+  });
+
+  final int selectedValue;
+  final String title;
+  final DateTime date;
+  final RxInt selectedDate;
+
+  final List<String> months = [
+    "",
+    "Ocak",
+    "Şubat",
+    "Mart",
+    "Nisan",
+    "Mayıs",
+    "Haziran",
+    "Temmuz",
+    "Ağustos",
+    "Eylül",
+    "Ekim",
+    "Kasım",
+    "Aralık"
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5.r),
+            border: Border.all(color: Colors.green, width: 1.h),
+            color: selectedDate.value == selectedValue
+                ? Colors.green
+                : Colors.white),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+              padding: CustomPadding.symmetricInset(30, 3),
+              color: Colors.white,
+              child: GeneralTextWidget(
+                  title: title, fontsize: 14.sp, color: Colors.grey),
+            ),
+            Container(
+              padding: CustomPadding.onlyHorizontalInset(25),
+              child: GeneralTextWidget(
+                  title: months[date.month],
+                  fontsize: 15.sp,
+                  color: selectedDate.value == selectedValue
+                      ? Colors.white
+                      : Colors.green),
+            ),
+            GeneralTextWidget(
+                title: date.day.toString(),
+                fontsize: 35.sp,
+                fontWeight: FontWeight.bold,
+                color: selectedDate.value == selectedValue
+                    ? Colors.white
+                    : Colors.green),
+            GeneralTextWidget(
+                title: DateFormat('EEEE', "tr").format(date),
+                fontsize: 13.sp,
+                fontWeight: FontWeight.normal,
+                color: selectedDate.value == selectedValue
+                    ? Colors.white
+                    : Colors.green),
+            SizedBox(
+              height: 4.h,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SelectedCargoType extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return Column(
+        children: [
+          SizedBox(
+            height: 20.h,
+            child: Text(
+              "Lütfen gönderi tipini seçiniz",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(height: 5.h),
+          Divider(
+            color: Colors.grey,
+            height: 1.h,
+          ),
+          SizedBox(height: 5.h),
+          Container(
+            padding: CustomPadding.symmetricInset(5, 5),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                    onTap: () async {
+                      controller.getCourierModel.value.cargoParcelTypeId = 5;
+                      controller.getCourierModel.value.customerMobilId =
+                          controller.currentAuth.value;
+                      await Get.toNamed("getCourierShipmentType", arguments: {
+                        "price": 43.58 - (43.58 * 25) / 100,
+                        "type": "DOSYA - EVRAK",
+                        "weight": 2.0
+                      });
+                    },
+                    child: const _CargoType(
+                        icon: "images/file_icon.png", title: "Dosya-Evrak")),
+                InkWell(
+                    onTap: () {
+                      controller.getCourierModel.value.cargoParcelTypeId = 6;
+                      controller.getCourierModel.value.customerMobilId =
+                          controller.currentAuth.value;
+                      Get.toNamed("/parcelSending", arguments: {
+                        "incoming": "getCourier",
+                      });
+                    },
+                    child: const _CargoType(
+                        icon: "images/parcel_icon.png", title: "Koli-Paket")),
+              ],
+            ),
+          ),
+        ],
+      );
+    });
+  }
+}
+
+class _CargoType extends StatelessWidget {
+  const _CargoType({required this.icon, required this.title});
+  final String icon;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -288,7 +464,7 @@ class _GetCourierWidegetsState extends State<GetCourierWidegets>
           padding: CustomPadding.onlyHorizontalInset(
             15,
           ),
-          child: textWidget(
+          child: GeneralTextWidget(
             title: title,
             fontsize: 15.sp,
           ),
@@ -296,63 +472,6 @@ class _GetCourierWidegetsState extends State<GetCourierWidegets>
         SizedBox(
           height: 4.h,
         )
-      ],
-    );
-  }
-
-  Widget selectedCargoTypeWidget() {
-    return Column(
-      children: [
-        SizedBox(
-          height: 20.h,
-          child: Text(
-            "Lütfen gönderi tipini seçiniz",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 15.sp,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
-        SizedBox(height: 5.h),
-        Divider(
-          color: Colors.grey,
-          height: 1.h,
-        ),
-        SizedBox(height: 5.h),
-        Container(
-          padding: CustomPadding.symmetricInset(5, 5),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                  onTap: () async {
-                    controller.getCourierModel.value.cargoParcelTypeId = 5;
-                    controller.getCourierModel.value.customerMobilId =
-                        controller.currentAuth.value;
-                    await Get.toNamed("getCourierShipmentType", arguments: {
-                      "price": 43.58 - (43.58 * 25) / 100,
-                      "type": "DOSYA - EVRAK",
-                      "weight": 2.0
-                    });
-                  },
-                  child: cargoTypeWidget(
-                      icon: "images/file_icon.png", title: "Dosya-Evrak")),
-              InkWell(
-                  onTap: () {
-                    controller.getCourierModel.value.cargoParcelTypeId = 6;
-                    controller.getCourierModel.value.customerMobilId =
-                        controller.currentAuth.value;
-                    Get.toNamed("/parcelSending", arguments: {
-                      "incoming": "getCourier",
-                    });
-                  },
-                  child: cargoTypeWidget(
-                      icon: "images/parcel_icon.png", title: "Koli-Paket")),
-            ],
-          ),
-        ),
       ],
     );
   }

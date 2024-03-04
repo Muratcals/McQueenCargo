@@ -1,4 +1,6 @@
 import 'package:mc_queen_cargo/features/AtomicWidgets/atomic_orange_button.dart';
+import 'package:mc_queen_cargo/features/Model/adress_model.dart';
+import 'package:mc_queen_cargo/features/Model/receiver_address_model.dart';
 import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
 import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/cargo_calculate_price_mixin.dart';
 import 'package:mc_queen_cargo/main_mixin.dart';
@@ -31,7 +33,7 @@ class _CargoPricaCalculatePageState extends State<CargoPricaCalculatePage>
               selectedCustomerAddressContainer(),
               SizedBox(height: 10.h),
               selectedRecevierAddressContainer(),
-              nextButton()
+              NextButton(recevierAddressModel: recevierAddressModel, customerAddressModel: customerAddressModel)
             ],
           ),
         ),
@@ -39,24 +41,10 @@ class _CargoPricaCalculatePageState extends State<CargoPricaCalculatePage>
     );
   }
 
-  Container nextButton() {
-    return Container(
-      margin: CustomPadding.symmetricInset(50, 25),
-      child: recevierAddressModel != null && customerAddressModel != null
-          ? AtomicOrangeButton(
-              onPressed: () {
-                Get.toNamed("/shipmentType");
-              },
-              title: "Devam Et")
-          : Container(),
-    );
-  }
-
   Widget selectedCustomerAddressContainer() {
     return Container(
       color: Colors.white,
       width: 190.w,
-      height: 89.h,
       child: Column(
         children: [
           Container(
@@ -83,7 +71,7 @@ class _CargoPricaCalculatePageState extends State<CargoPricaCalculatePage>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    textWidget(
+                    GeneralTextWidget(
                         title: customerAddressModel == null
                             ? "Nereden?"
                             : "${customerAddressModel!.districtName}/${customerAddressModel!.provinceName}",
@@ -101,7 +89,6 @@ class _CargoPricaCalculatePageState extends State<CargoPricaCalculatePage>
     return Container(
       color: Colors.white,
       width: 190.w,
-      height: 89.h,
       child: Column(
         children: [
           Container(
@@ -126,7 +113,7 @@ class _CargoPricaCalculatePageState extends State<CargoPricaCalculatePage>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  textWidget(
+                  GeneralTextWidget(
                       title: recevierAddressModel == null
                           ? "Nereye?"
                           : "${recevierAddressModel!.districtName}/${recevierAddressModel!.provinceName}",
@@ -163,6 +150,31 @@ class _CargoPricaCalculatePageState extends State<CargoPricaCalculatePage>
               : Container(),
         )
       ],
+    );
+  }
+}
+
+class NextButton extends StatelessWidget {
+  const NextButton({
+    super.key,
+    required this.recevierAddressModel,
+    required this.customerAddressModel,
+  });
+
+  final ReceiverAddressModel? recevierAddressModel;
+  final AddressModel? customerAddressModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: CustomPadding.symmetricInset(50, 25),
+      child: recevierAddressModel != null && customerAddressModel != null
+          ? AtomicOrangeButton(
+              onPressed: () {
+                Get.toNamed("/shipmentType");
+              },
+              title: "Devam Et")
+          : Container(),
     );
   }
 }

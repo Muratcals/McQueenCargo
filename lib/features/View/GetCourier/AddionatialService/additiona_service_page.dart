@@ -28,9 +28,9 @@ class _AdditionalServicePageState extends State<AdditionalServicePage>
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         toolbarHeight: 30.h,
-        flexibleSpace: appbarFlexibleSpace(),
-        leading: appBarIcon(),
-        title: textWidget(
+        flexibleSpace: AppbarFlexibleSpace(),
+        leading: AppBarIcon(),
+        title: GeneralTextWidget(
             title: "Ek Hizmet Seçimi", fontsize: 14.sp, color: Colors.white),
       ),
       body: AtomicFutureBuilder(
@@ -59,7 +59,7 @@ class _AdditionalServicePageState extends State<AdditionalServicePage>
                       transportService: "STANDART"),
                   Container(
                     padding: EdgeInsets.all(15.r),
-                    child: textWidget(
+                    child: GeneralTextWidget(
                         title: "Lütfen ek hizmet seçimlerini yapınız",
                         fontsize: 16.sp),
                   ),
@@ -68,7 +68,7 @@ class _AdditionalServicePageState extends State<AdditionalServicePage>
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      textWidget(title: "TESLİMAT HİZMETLERİ", fontsize: 15.sp),
+                      GeneralTextWidget(title: "TESLİMAT HİZMETLERİ", fontsize: 15.sp),
                       ProcumentService(
                         type: type,
                         onPressed: (updatePrice, index) {
@@ -124,11 +124,11 @@ class _AdditionalServicePageState extends State<AdditionalServicePage>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                textWidget(
+                GeneralTextWidget(
                     title: "ADRESTEN ALIM",
                     fontsize: 15.sp,
                     fontWeight: FontWeight.bold),
-                textWidget(
+                GeneralTextWidget(
                     title: "$procurementPrice TL",
                     fontsize: 16.sp,
                     color: Colors.green)

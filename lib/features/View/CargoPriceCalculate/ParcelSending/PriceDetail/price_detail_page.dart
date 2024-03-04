@@ -91,7 +91,7 @@ class _PriceDetailPageState extends State<PriceDetailPage>
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10.r), topRight: Radius.circular(10.r))),
       padding: CustomPadding.allInset(15),
-      child: textWidget(
+      child: GeneralTextWidget(
         title: "TAMAMLAYICI / EK HİZMETLER",
         fontsize: 14.sp,
         color: Colors.white,

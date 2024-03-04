@@ -26,10 +26,35 @@ class CourierInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return getCourierPackageInformationContainer();
+    return _GetCourierPackageInformationContainer(
+        customerAddressModel: customerAddressModel,
+        receiverAddressModel: receiverAddressModel,
+        controller: controller,
+        type: type,
+        transportPrice: transportPrice,
+        transportService: transportService);
   }
+}
 
-  Column getCourierPackageInformationContainer() {
+class _GetCourierPackageInformationContainer extends StatelessWidget {
+  const _GetCourierPackageInformationContainer({
+    required this.customerAddressModel,
+    required this.receiverAddressModel,
+    required this.controller,
+    required this.type,
+    required this.transportPrice,
+    required this.transportService,
+  });
+
+  final AddressModel customerAddressModel;
+  final ReceiverAddressModel receiverAddressModel;
+  final PartnerController controller;
+  final String type;
+  final double? transportPrice;
+  final String? transportService;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -38,11 +63,11 @@ class CourierInformation extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              textWidget(
+              GeneralTextWidget(
                   title: "Nereden",
                   fontsize: 14.sp,
                   color: Colors.grey.shade800),
-              textWidget(
+              GeneralTextWidget(
                   title: "Nereye",
                   fontsize: 14.sp,
                   color: Colors.grey.shade800),
@@ -62,7 +87,7 @@ class CourierInformation extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    textWidget(
+                    GeneralTextWidget(
                         title:
                             "${customerAddressModel.districtName} / ${customerAddressModel.provinceName}",
                         fontsize: 13.sp,
@@ -71,7 +96,7 @@ class CourierInformation extends StatelessWidget {
                       Icons.swipe_right_alt_sharp,
                       color: Colors.white,
                     ),
-                    textWidget(
+                    GeneralTextWidget(
                         title:
                             "${receiverAddressModel.districtName} / ${receiverAddressModel.provinceName}",
                         fontsize: 13.sp,
@@ -89,7 +114,7 @@ class CourierInformation extends StatelessWidget {
                       size: 23.r,
                     ),
                   ),
-                  textWidget(
+                  GeneralTextWidget(
                     title: DateFormat('dd MMMM y EEEE', 'tr_TR').format(
                         controller.getCourierModel.value.cargoRealeseDate!),
                     fontsize: 12.sp,
@@ -111,7 +136,7 @@ class CourierInformation extends StatelessWidget {
                     children: [
                       Container(
                         padding: CustomPadding.onlyVerticalInset(5),
-                        child: textWidget(title: type, fontsize: 12.sp),
+                        child: GeneralTextWidget(title: type, fontsize: 12.sp),
                       ),
                       transportPrice == null && transportService == null
                           ? Container()
@@ -122,11 +147,11 @@ class CourierInformation extends StatelessWidget {
                                   padding: CustomPadding.onlyVerticalInset(5),
                                   child: Row(
                                     children: [
-                                      textWidget(
+                                      GeneralTextWidget(
                                         title: "Taşıma Hizmeti: ",
                                         fontsize: 12.sp,
                                       ),
-                                      textWidget(
+                                      GeneralTextWidget(
                                           title: transportService!,
                                           fontsize: 12.sp,
                                           color: Colors.grey.shade600),
@@ -139,12 +164,12 @@ class CourierInformation extends StatelessWidget {
                                             CustomPadding.onlyVerticalInset(5),
                                         child: Row(
                                           children: [
-                                            textWidget(
+                                            GeneralTextWidget(
                                                 title:
                                                     "Taşıma Hizmeti Bedeli: ",
                                                 fontsize: 12.sp,
                                                 color: Colors.grey.shade600),
-                                            textWidget(
+                                            GeneralTextWidget(
                                               title:
                                                   "${transportPrice?.toStringAsFixed(2)} TL",
                                               fontsize: 12.sp,

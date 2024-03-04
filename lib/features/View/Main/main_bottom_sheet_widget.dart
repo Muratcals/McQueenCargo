@@ -3,7 +3,7 @@ import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:mc_queen_cargo/features/View/Main/main_page_widgets.dart';
+import 'package:mc_queen_cargo/main_mixin.dart';
 
 class MainBottomSheet extends StatefulWidget {
   const MainBottomSheet({super.key});
@@ -18,8 +18,6 @@ class _MainBottomSheetState extends State<MainBottomSheet> {
     super.initState();
     controller = Get.find();
   }
-
-  final MainPageWidgets widgets = MainPageWidgets();
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +34,12 @@ class _MainBottomSheetState extends State<MainBottomSheet> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                bottomSheetIcon(icon: "images/main_icon.png", title: "main"),
-                widgets.textWidgets(title: "Ana Sayfa")
+                const _BottomSheetIcon(
+                    icon: "images/main_icon.png", title: "main"),
+                GeneralTextWidget(
+                  title: "Ana Sayfa",
+                  fontsize: 14.sp,
+                )
               ],
             ),
           ),
@@ -52,9 +54,12 @@ class _MainBottomSheetState extends State<MainBottomSheet> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                bottomSheetIcon(
+                const _BottomSheetIcon(
                     icon: "images/cargos_icon.png", title: "myCargos"),
-                widgets.textWidgets(title: "Kargolarım")
+                GeneralTextWidget(
+                  title: "Kargolarım",
+                  fontsize: 14.sp,
+                )
               ],
             ),
           ),
@@ -69,9 +74,12 @@ class _MainBottomSheetState extends State<MainBottomSheet> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                bottomSheetIcon(
+                const _BottomSheetIcon(
                     icon: "images/get_cargo_icon.png", title: "getCourier"),
-                widgets.textWidgets(title: "Kurye Çağır")
+                GeneralTextWidget(
+                  title: "Kurye Çağır",
+                  fontsize: 14.sp,
+                )
               ],
             ),
           ),
@@ -86,10 +94,13 @@ class _MainBottomSheetState extends State<MainBottomSheet> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                bottomSheetIcon(
+                const _BottomSheetIcon(
                     icon: "images/cargo_price_calculator_icon.png",
                     title: "calculatePrice"),
-                widgets.textWidgets(title: "Fiyat Hesapla")
+                GeneralTextWidget(
+                  title: "Fiyat Hesapla",
+                  fontsize: 14.sp,
+                )
               ],
             ),
           ),
@@ -104,9 +115,12 @@ class _MainBottomSheetState extends State<MainBottomSheet> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                bottomSheetIcon(
+                const _BottomSheetIcon(
                     icon: "images/profil_icon.png", title: "myProfile"),
-                widgets.textWidgets(title: "Profilim")
+                GeneralTextWidget(
+                  title: "Profilim",
+                  fontsize: 14.sp,
+                )
               ],
             ),
           ),
@@ -114,17 +128,26 @@ class _MainBottomSheetState extends State<MainBottomSheet> {
       ),
     );
   }
+}
 
-  Widget bottomSheetIcon({required String icon, required String title}) {
-    return Obx(
-      () => Image.asset(
-        icon,
-        width: 20.w,
-        height: 20.h,
-        color: controller.selectedBottomSheet.value.contains(title)
-            ? null
-            : Colors.grey,
-      ),
-    );
+class _BottomSheetIcon extends StatelessWidget {
+  const _BottomSheetIcon({super.key, required this.icon, required this.title});
+  final String icon;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return Obx(
+        () => Image.asset(
+          icon,
+          width: 20.w,
+          height: 20.h,
+          color: controller.selectedBottomSheet.value.contains(title)
+              ? null
+              : Colors.grey,
+        ),
+      );
+    });
   }
 }
