@@ -1,40 +1,48 @@
-import 'package:mc_queen_cargo/features/Model/receiver_address_model.dart';
-import 'package:mc_queen_cargo/main_mixin.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+part of '../ReceiverAddress/address_detail_page.dart';
 
-class AddressInformationWidgets {
-  AppBar appBar() {
+class _AppBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return AppBar(
-      title: textWidget(
+      title: GeneralTextWidget(
           title: "Adres Detayı", fontsize: 15.sp, color: Colors.white),
       centerTitle: true,
       toolbarHeight: 27.h,
-      leading: appBarIcon(),
-      flexibleSpace: appbarFlexibleSpace(),
+      leading: AppBarIcon(),
+      flexibleSpace: AppbarFlexibleSpace(),
     );
   }
+}
 
-  Container customerAddressIformationColumn(ReceiverAddressModel model) {
+class _CustomerAddressIformationColumn extends StatelessWidget {
+  const _CustomerAddressIformationColumn({required this.model});
+  final ReceiverAddressModel model;
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: Column(
         children: [
-          columnItems(title: "Adres Tipi", subTitle: model.title),
-          columnItems(title: "Mahalle", subTitle: model.neighbourhoodName),
-          columnItems(title: "Cadde/Sokak", subTitle: model.street),
-          columnItems(title: "Bina No", subTitle: model.buildingNo),
-          columnItems(title: "Daire No", subTitle: model.apartmentNumber),
-          columnItems(title: "İlçe", subTitle: model.districtName),
-          columnItems(title: "İl", subTitle: model.provinceName),
-          columnItems(title: "Adres Tarifi", subTitle: model.description),
-          fullAddress(model)
+          _ColumnItems(title: "Adres Tipi", subTitle: model.title),
+          _ColumnItems(title: "Mahalle", subTitle: model.neighbourhoodName),
+          _ColumnItems(title: "Cadde/Sokak", subTitle: model.street),
+          _ColumnItems(title: "Bina No", subTitle: model.buildingNo),
+          _ColumnItems(title: "Daire No", subTitle: model.apartmentNumber),
+          _ColumnItems(title: "İlçe", subTitle: model.districtName),
+          _ColumnItems(title: "İl", subTitle: model.provinceName),
+          _ColumnItems(title: "Adres Tarifi", subTitle: model.description),
+          _FullAddressText(model: model)
         ],
       ),
     );
   }
+}
 
-  Widget fullAddress(ReceiverAddressModel model) {
+class _FullAddressText extends StatelessWidget {
+  const _FullAddressText({required this.model});
+  final ReceiverAddressModel model;
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5.h),
       child: Row(
@@ -44,7 +52,7 @@ class AddressInformationWidgets {
         children: [
           SizedBox(
               width: 120.w,
-              child: textWidget(
+              child: GeneralTextWidget(
                   title: "Tam Adres", fontsize: 14.sp, color: Colors.grey)),
           Expanded(
             child: Text(
@@ -60,8 +68,15 @@ class AddressInformationWidgets {
       ),
     );
   }
+}
 
-  Container columnItems({required String title, String? subTitle}) {
+class _ColumnItems extends StatelessWidget {
+  const _ColumnItems({required this.title, this.subTitle});
+  final String title;
+  final String? subTitle;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5.h),
       child: Row(
@@ -71,7 +86,7 @@ class AddressInformationWidgets {
         children: [
           SizedBox(
               width: 150.w,
-              child: textWidget(
+              child: GeneralTextWidget(
                   title: title, fontsize: 14.sp, color: Colors.grey)),
           Expanded(
             child: Text(
@@ -88,8 +103,14 @@ class AddressInformationWidgets {
       ),
     );
   }
+}
 
-  Container columnTitle(ReceiverAddressModel model) {
+class _ColumnTitle extends StatelessWidget {
+  const _ColumnTitle({required this.model});
+  final ReceiverAddressModel model;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
       child: Row(
@@ -104,13 +125,13 @@ class AddressInformationWidgets {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                textWidget(
+                GeneralTextWidget(
                     title: model.title!,
                     fontsize: 13.sp,
                     color: Colors.black,
                     fontWeight: FontWeight.bold),
                 const SizedBox(height: 5),
-                textWidget(
+                GeneralTextWidget(
                     title: "${model.districtName}/${model.provinceName}",
                     fontsize: 12.sp,
                     color: Colors.grey)
@@ -121,26 +142,91 @@ class AddressInformationWidgets {
       ),
     );
   }
+}
 
-  Widget receiverAddressInformation(ReceiverAddressModel model) {
+class _ReceiverAddressInformation extends StatelessWidget {
+  const _ReceiverAddressInformation({required this.model});
+  final ReceiverAddressModel model;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
-        receiverAddressColumnItems(model),
-        customerAddressIformationColumn(model)
+        _ReceiverAddressColumnItems(
+          model: model,
+        ),
+        _CustomerAddressIformationColumn(model: model)
       ],
     );
   }
+}
 
-  Widget receiverAddressColumnItems(ReceiverAddressModel model) {
+class _ReceiverAddressColumnItems extends StatelessWidget {
+  const _ReceiverAddressColumnItems({required this.model});
+  final ReceiverAddressModel model;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: Column(
         children: [
-          columnItems(title: "Alıcı Adı", subTitle: model.nameSurname),
-          columnItems(title: "Alıcı GSM Numarası", subTitle: model.numberPhone),
-          columnItems(title: "Alıcı E-Posta", subTitle: model.email),
+          _ColumnItems(title: "Alıcı Adı", subTitle: model.nameSurname),
+          _ColumnItems(
+              title: "Alıcı GSM Numarası", subTitle: model.numberPhone),
+          _ColumnItems(title: "Alıcı E-Posta", subTitle: model.email),
         ],
       ),
+    );
+  }
+}
+
+class _AddressDetailList extends StatelessWidget {
+  const _AddressDetailList({required this.model, required this.onPressedButton});
+  final ReceiverAddressModel model;
+  final Function() onPressedButton;
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      physics: const ScrollPhysics(),
+      child: Column(
+        children: [
+          Container(
+            margin: CustomPadding.symmetricInset(15, 10),
+            padding: CustomPadding.allInset(5),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(5.r)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _ColumnTitle(model: model),
+                _ReceiverAddressInformation(model: model),
+              ],
+            ),
+          ),
+          _DeleteAddressButton(
+            onPressedButton: () => onPressedButton(),
+          )
+        ],
+      ),
+    );
+    
+  }
+}
+
+class _DeleteAddressButton extends StatelessWidget {
+  const _DeleteAddressButton({required this.onPressedButton});
+  final Function() onPressedButton;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: CustomPadding.onlyHorizontalInset(50),
+      child: AtomicOrangeButton(
+          onPressed: () async {
+            await onPressedButton();
+          },
+          title: "Adresi Sil"),
     );
   }
 }

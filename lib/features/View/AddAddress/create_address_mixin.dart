@@ -10,10 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:mc_queen_cargo/features/View/AddAddress/create_address_page.dart';
-import 'package:mc_queen_cargo/features/View/AddAddress/create_address_widgets.dart';
 
 mixin CreateAddressMixin on State<CreateAddressPage> {
-  CreateAddressWidgets widgets = CreateAddressWidgets();
   PartnerController partnerController = Get.find();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<FormFieldState> neighbourhoodKey = GlobalKey<FormFieldState>();

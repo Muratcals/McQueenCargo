@@ -43,9 +43,9 @@ class _PriceInformationPageState extends State<PriceInformationPage>
   AppBar appBar() {
     return AppBar(
       toolbarHeight: 30.h,
-      leading: appBarIcon(),
-      flexibleSpace: appbarFlexibleSpace(),
-      title: textWidget(
+      leading: AppBarIcon(),
+      flexibleSpace: AppbarFlexibleSpace(),
+      title: GeneralTextWidget(
           title: "Fiyat Bilgisi", fontsize: 14.sp, color: Colors.white),
       centerTitle: true,
       actions: [
@@ -58,7 +58,7 @@ class _PriceInformationPageState extends State<PriceInformationPage>
           child: Container(
               alignment: Alignment.center,
               margin: CustomPadding.only(right: 10),
-              child: textWidget(
+              child: GeneralTextWidget(
                   title: "İptal", fontsize: 14.sp, color: Colors.white)),
         )
       ],
@@ -81,12 +81,12 @@ class _PriceInformationPageState extends State<PriceInformationPage>
 
   ListTile titleWidget() {
     return ListTile(
-      title: textWidget(
+      title: GeneralTextWidget(
           title: "${incoming.toUpperCase()} / STANDART",
           fontsize: 14.sp,
           color: Colors.black,
           fontWeight: FontWeight.bold),
-      subtitle: textWidget(
+      subtitle: GeneralTextWidget(
           title: "Tüm Türkiye geneli standart hizmettir.",
           fontsize: 13.sp,
           color: Colors.grey),
@@ -119,7 +119,7 @@ class _PriceInformationPageState extends State<PriceInformationPage>
   Column columnItems({required String title, required String subTitle}) {
     return Column(
       children: [
-        textWidget(title: title, fontsize: 16.sp, color: Colors.black),
+        GeneralTextWidget(title: title, fontsize: 16.sp, color: Colors.black),
         SizedBox(height: 5.h),
         Text(
           subTitle,

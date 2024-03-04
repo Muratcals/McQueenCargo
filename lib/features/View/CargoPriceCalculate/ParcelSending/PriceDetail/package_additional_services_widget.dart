@@ -32,7 +32,7 @@ class _PackageAdditionalServicesState extends State<PackageAdditionalServices> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 5.h),
-          textWidget(title: "Alım Hizmetleri", fontsize: 16.sp),
+          GeneralTextWidget(title: "Alım Hizmetleri", fontsize: 16.sp),
           SingleChildScrollView(
             physics: const ScrollPhysics(),
             scrollDirection: Axis.horizontal,
@@ -47,7 +47,7 @@ class _PackageAdditionalServicesState extends State<PackageAdditionalServices> {
             ),
           ),
           SizedBox(height: 5.h),
-          textWidget(title: "Teslim Hizmetleri", fontsize: 16.sp),
+          GeneralTextWidget(title: "Teslim Hizmetleri", fontsize: 16.sp),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             physics: const ScrollPhysics(),
@@ -111,9 +111,9 @@ class _PackageAdditionalServicesState extends State<PackageAdditionalServices> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                textWidget(
+                GeneralTextWidget(
                     title: model.name, fontsize: 13.sp, color: Colors.grey),
-                textWidget(
+                GeneralTextWidget(
                     title: model.price.toString(),
                     fontsize: 14.sp,
                     fontWeight: FontWeight.bold,
@@ -149,9 +149,9 @@ class _PackageAdditionalServicesState extends State<PackageAdditionalServices> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                textWidget(
+                GeneralTextWidget(
                     title: model.name, fontsize: 13.sp, color: Colors.grey),
-                textWidget(
+                GeneralTextWidget(
                     title: model.price.toString(),
                     fontsize: 14.sp,
                     fontWeight: FontWeight.bold,
@@ -182,7 +182,7 @@ class _PackageAdditionalServicesState extends State<PackageAdditionalServices> {
         color: selectedProcurement != index ? Colors.white : Colors.green,
         padding: CustomPadding.onlyVerticalInset(3),
         alignment: Alignment.center,
-        child: textWidget(
+        child: GeneralTextWidget(
             title: selectedProcurement != index ? "+" : "✓",
             fontsize: 14.sp,
             color: selectedProcurement != index ? Colors.black : Colors.white),
@@ -204,7 +204,7 @@ class _PackageAdditionalServicesState extends State<PackageAdditionalServices> {
         color: selectedDelivery != index ? Colors.white : Colors.green,
         padding: CustomPadding.onlyVerticalInset(3),
         alignment: Alignment.center,
-        child: textWidget(
+        child: GeneralTextWidget(
             title: selectedDelivery != index ? "+" : "✓",
             fontsize: 14.sp,
             color: selectedDelivery != index ? Colors.black : Colors.white),

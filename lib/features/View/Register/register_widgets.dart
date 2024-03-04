@@ -1,20 +1,32 @@
-import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
-import 'package:mc_queen_cargo/main_mixin.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class RegisterPageWidgets {
-  AppBar registerAppBar() {
+part of '../Register/register_page.dart';
+
+class _RegisterAppBar extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
     return AppBar(
         toolbarHeight: 30.h,
-        leading: appBarIcon(),
-        flexibleSpace: appbarFlexibleSpace(),
+        leading: AppBarIcon(),
+        flexibleSpace: AppbarFlexibleSpace(),
         centerTitle: true,
-        title:
-            textWidget(title: "Üye Ol", fontsize: 14.sp, color: Colors.white));
+        title: GeneralTextWidget(
+            title: "Üye Ol", fontsize: 14.sp, color: Colors.white),);
   }
+}
 
-  Column registerPageColumnItems(String number, String title, String incoming) {
+class _RegisterPageColumnItems extends StatelessWidget {
+  const _RegisterPageColumnItems(
+      {super.key,
+      required this.number,
+      required this.title,
+      required this.incoming});
+  final String number;
+  final String title;
+  final String incoming;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -60,5 +72,6 @@ class RegisterPageWidgets {
         )
       ],
     );
+    ;
   }
 }

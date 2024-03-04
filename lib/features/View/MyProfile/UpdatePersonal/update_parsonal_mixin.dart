@@ -5,5 +5,4 @@ import 'package:get/get.dart';
 import 'update_personal_page.dart';
 
 mixin UpdatePersonalMixin on State<UpdatePersonalPage> {
-  PartnerController controller = Get.find();
 }

@@ -31,7 +31,7 @@ class _FileAdditionalServiceState extends State<FileAdditionalService> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 5.h),
-          textWidget(title: "Alım Hizmetleri", fontsize: 16.sp),
+          GeneralTextWidget(title: "Alım Hizmetleri", fontsize: 16.sp),
           SingleChildScrollView(
             physics: const ScrollPhysics(),
             scrollDirection: Axis.horizontal,
@@ -46,7 +46,7 @@ class _FileAdditionalServiceState extends State<FileAdditionalService> {
             ),
           ),
           SizedBox(height: 5.h),
-          textWidget(title: "Teslimat Hizmetleri", fontsize: 16.sp),
+          GeneralTextWidget(title: "Teslimat Hizmetleri", fontsize: 16.sp),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             physics: const ScrollPhysics(),
@@ -107,9 +107,9 @@ class _FileAdditionalServiceState extends State<FileAdditionalService> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                textWidget(
+                GeneralTextWidget(
                     title: model.name, fontsize: 13.sp, color: Colors.grey),
-                textWidget(
+                GeneralTextWidget(
                     title: model.price.toString(),
                     fontsize: 14.sp,
                     fontWeight: FontWeight.bold,
@@ -145,9 +145,9 @@ class _FileAdditionalServiceState extends State<FileAdditionalService> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                textWidget(
+                GeneralTextWidget(
                     title: model.name, fontsize: 13.sp, color: Colors.grey),
-                textWidget(
+                GeneralTextWidget(
                     title: model.price.toString(),
                     fontsize: 14.sp,
                     fontWeight: FontWeight.bold,
@@ -178,7 +178,7 @@ class _FileAdditionalServiceState extends State<FileAdditionalService> {
         color: selectedProcurement != index ? Colors.white : Colors.green,
         padding: EdgeInsets.symmetric(vertical: 3.h),
         alignment: Alignment.center,
-        child: textWidget(
+        child: GeneralTextWidget(
             title: selectedProcurement != index ? "+" : "✓",
             fontsize: 14.sp,
             color: selectedProcurement != index ? Colors.black : Colors.white),
@@ -200,7 +200,7 @@ class _FileAdditionalServiceState extends State<FileAdditionalService> {
         color: selectedDelivery != index ? Colors.white : Colors.green,
         padding: EdgeInsets.symmetric(vertical: 3.h),
         alignment: Alignment.center,
-        child: textWidget(
+        child: GeneralTextWidget(
             title: selectedDelivery != index ? "+" : "✓",
             fontsize: 14.sp,
             color: selectedDelivery != index ? Colors.black : Colors.white),

@@ -1,26 +1,23 @@
-import 'package:mc_queen_cargo/features/AtomicWidgets/atomic_textformfield.dart';
-import 'package:mc_queen_cargo/features/Controller/partner_controller.dart';
-import 'package:mc_queen_cargo/features/Model/district_model.dart';
-import 'package:mc_queen_cargo/features/Model/neighbourhood_model.dart';
-import 'package:mc_queen_cargo/features/Model/province_model.dart';
-import 'package:mc_queen_cargo/features/Service/services.dart';
-import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
-import 'package:mc_queen_cargo/main_mixin.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
-class CreateAddressWidgets {
-  PartnerController controller = Get.find();
+part of  '../AddAddress/create_address_page.dart';
 
-  Row addressProvince(
-    List<DistrictModel> districtList,
-    List<ProvinceModel> provinceList,
-    RxList<NeighbourhoodModel> neighbourhoodList,
-    String incoming,
-    GlobalKey<FormFieldState> neighbourhoodKey,
-  ) {
+class _AddressProvince extends StatelessWidget {
+  const _AddressProvince({
+    required this.districtList,
+    required this.provinceList,
+    required this.neighbourhoodList,
+    required this.incoming,
+    required this.neighbourhoodKey,
+  });
+
+  final List<DistrictModel> districtList;
+  final List<ProvinceModel> provinceList;
+  final RxList<NeighbourhoodModel> neighbourhoodList;
+  final String incoming;
+  final GlobalKey<FormFieldState> neighbourhoodKey;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,77 +25,54 @@ class CreateAddressWidgets {
         Expanded(
           child: Container(
             margin: CustomPadding.only(right: 10),
-            child: province(provinceList, incoming),
+            child: _Province(provinceList: provinceList, incoming: incoming),
           ),
         ),
         SizedBox(height: 10.h),
         Expanded(
           child: Container(
             margin: CustomPadding.only(left: 15),
-            child: district(
-                districtList, neighbourhoodList, incoming, neighbourhoodKey),
+            child: _District(
+                districtList: districtList,
+                neighbourhoodList: neighbourhoodList,
+                incoming: incoming,
+                neighbourhoodKey: neighbourhoodKey),
           ),
         )
       ],
     );
   }
+}
 
-  DropdownButtonFormField district(
-      List<DistrictModel> districtList,
-      RxList<NeighbourhoodModel> neighbourhoodList,
-      String incoming,
-      GlobalKey<FormFieldState> neighbourhoodKey) {
-    return DropdownButtonFormField(
-      decoration: InputDecoration(
-        fillColor: Colors.white,
-        filled: true,
-        labelText: "İlçe",
-        labelStyle: TextStyle(color: Colors.grey.shade600, fontSize: 14.sp),
-        contentPadding: CustomPadding.onlyHorizontalInset(10),
-        border: OutlineInputBorder(
-          gapPadding: 0,
-          borderRadius: BorderRadius.circular(5.r),
-        ),
-      ),
-      validator: (value) {
-        if (value == null) {
-          return "Boş Geçilmez";
-        }
-        return null;
-      },
-      items: districtList
-          .map(
-            (e) => DropdownMenuItem(
-              value: e.id,
-              child: textWidget(title: e.districtName ?? "", fontsize: 13.sp),
-            ),
-          )
-          .toList(),
-      onChanged: (value) async {
-        if (incoming.contains("customer")) {
-          controller.customerAddressModel.value.districtId = value;
-          neighbourhoodKey.currentState?.reset();
-          neighbourhoodList.value = [];
-          await getNeighbourhoodList(neighbourhoodList, value);
-        } else {
-          controller.receiverAddressModel.value.districtId = value;
-          neighbourhoodKey.currentState?.reset();
-          neighbourhoodList.value = [];
-          await getNeighbourhoodList(neighbourhoodList, value);
-        }
-      },
-    );
+class _District extends StatelessWidget {
+  const _District({
+    required this.districtList,
+    required this.neighbourhoodList,
+    required this.incoming,
+    required this.neighbourhoodKey,
+  });
+
+  final List<DistrictModel> districtList;
+  final RxList<NeighbourhoodModel> neighbourhoodList;
+  final String incoming;
+  final GlobalKey<FormFieldState> neighbourhoodKey;
+
+  Future<void> getNeighbourhoodList(
+      RxList<NeighbourhoodModel> neighbourhoodList, int districtId) async {
+    Services service = Services();
+    PartnerController controller = Get.find();
+    neighbourhoodList.value = await service.getNeighbourhoodList(
+        districtId, controller.accessToken.value);
   }
 
-  Widget neighbourhood(RxList<NeighbourhoodModel> neighbourhoodList,
-      String incoming, GlobalKey<FormFieldState> neighbourhoodKey) {
-    return Obx(
-      () => DropdownButtonFormField(
-        key: neighbourhoodKey,
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return DropdownButtonFormField(
         decoration: InputDecoration(
           fillColor: Colors.white,
           filled: true,
-          labelText: "Mahalle",
+          labelText: "İlçe",
           labelStyle: TextStyle(color: Colors.grey.shade600, fontSize: 14.sp),
           contentPadding: CustomPadding.onlyHorizontalInset(10),
           border: OutlineInputBorder(
@@ -112,148 +86,239 @@ class CreateAddressWidgets {
           }
           return null;
         },
-        items: neighbourhoodList
+        items: districtList
             .map(
               (e) => DropdownMenuItem(
                 value: e.id,
-                child: textWidget(
-                    title: e.neighbourhoodName ?? "", fontsize: 13.sp),
+                child: GeneralTextWidget(
+                    title: e.districtName ?? "", fontsize: 13.sp),
+              ),
+            )
+            .toList(),
+        onChanged: (value) async {
+          if (incoming.contains("customer")) {
+            controller.customerAddressModel.value.districtId = value;
+            neighbourhoodKey.currentState?.reset();
+            neighbourhoodList.value = [];
+            await getNeighbourhoodList(neighbourhoodList, value!);
+          } else {
+            controller.receiverAddressModel.value.districtId = value;
+            neighbourhoodKey.currentState?.reset();
+            neighbourhoodList.value = [];
+            await getNeighbourhoodList(neighbourhoodList, value!);
+          }
+        },
+      );
+    });
+  }
+}
+
+class _Neighbourhood extends StatelessWidget {
+  const _Neighbourhood({
+    required this.neighbourhoodList,
+    required this.incoming,
+    required this.neighbourhoodKey,
+  });
+
+  final RxList<NeighbourhoodModel> neighbourhoodList;
+  final String incoming;
+  final GlobalKey<FormFieldState> neighbourhoodKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => GetBuilder<PartnerController>(builder: (controller) {
+        return DropdownButtonFormField(
+          key: neighbourhoodKey,
+          decoration: InputDecoration(
+            fillColor: Colors.white,
+            filled: true,
+            labelText: "Mahalle",
+            labelStyle: TextStyle(color: Colors.grey.shade600, fontSize: 14.sp),
+            contentPadding: CustomPadding.onlyHorizontalInset(10),
+            border: OutlineInputBorder(
+              gapPadding: 0,
+              borderRadius: BorderRadius.circular(5.r),
+            ),
+          ),
+          validator: (value) {
+            if (value == null) {
+              return "Boş Geçilmez";
+            }
+            return null;
+          },
+          items: neighbourhoodList
+              .map(
+                (e) => DropdownMenuItem(
+                  value: e.id,
+                  child: GeneralTextWidget(
+                      title: e.neighbourhoodName ?? "", fontsize: 13.sp),
+                ),
+              )
+              .toList(),
+          onChanged: (value) {
+            if (incoming.contains("customer")) {
+              controller.customerAddressModel.value.neighbourhoodId = value;
+            } else {
+              controller.receiverAddressModel.value.neighbourhoodId = value;
+            }
+          },
+        );
+      }),
+    );
+  }
+}
+
+class _Province extends StatelessWidget {
+  const _Province({
+    required this.provinceList,
+    required this.incoming,
+  });
+
+  final List<ProvinceModel> provinceList;
+  final String incoming;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return DropdownButtonFormField(
+        dropdownColor: Colors.white,
+        decoration: InputDecoration(
+          fillColor: Colors.white,
+          filled: true,
+          labelText: "İl",
+          labelStyle: TextStyle(color: Colors.grey.shade600, fontSize: 14.sp),
+          contentPadding: CustomPadding.onlyHorizontalInset(10),
+          border: OutlineInputBorder(
+            gapPadding: 0,
+            borderRadius: BorderRadius.circular(5.r),
+          ),
+        ),
+        validator: (value) {
+          if (value == null) {
+            return "Boş Geçilmez";
+          }
+          return null;
+        },
+        items: provinceList
+            .map(
+              (e) => DropdownMenuItem(
+                value: e.id,
+                child: GeneralTextWidget(
+                    title: e.provinceName ?? "", fontsize: 13.sp),
               ),
             )
             .toList(),
         onChanged: (value) {
           if (incoming.contains("customer")) {
-            controller.customerAddressModel.value.neighbourhoodId = value;
+            controller.customerAddressModel.value.provinceId = value;
           } else {
-            controller.receiverAddressModel.value.neighbourhoodId = value;
+            controller.receiverAddressModel.value.provinceId = value;
           }
         },
-      ),
-    );
+      );
+    });
   }
+}
 
-  DropdownButtonFormField province(
-      List<ProvinceModel> provinceList, String incoming) {
-    return DropdownButtonFormField(
-      dropdownColor: Colors.white,
-      decoration: InputDecoration(
-        fillColor: Colors.white,
-        filled: true,
-        labelText: "İl",
-        labelStyle: TextStyle(color: Colors.grey.shade600, fontSize: 14.sp),
-        contentPadding: CustomPadding.onlyHorizontalInset(10),
-        border: OutlineInputBorder(
-          gapPadding: 0,
-          borderRadius: BorderRadius.circular(5.r),
-        ),
-      ),
-      validator: (value) {
-        if (value == null) {
-          return "Boş Geçilmez";
-        }
-        return null;
-      },
-      items: provinceList
-          .map(
-            (e) => DropdownMenuItem(
-              value: e.id,
-              child: textWidget(title: e.provinceName ?? "", fontsize: 13.sp),
-            ),
-          )
-          .toList(),
-      onChanged: (value) {
-        if (incoming.contains("customer")) {
-          controller.customerAddressModel.value.provinceId = value;
-        } else {
-          controller.receiverAddressModel.value.provinceId = value;
-        }
-      },
-    );
+class _AddressTitle extends StatelessWidget {
+  const _AddressTitle({
+    required this.incoming,
+  });
+
+  final String incoming;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return AtomicTextFormField(
+        title: "Adres Adı",
+        fontColor: Colors.grey.shade600,
+        fontSize: 14.sp,
+        validator: (value) {
+          if (value?.isEmpty == true) {
+            return "Boş Geçilemez";
+          }
+          return null;
+        },
+        onSaved: (newValue) {
+          if (incoming.contains("customer")) {
+            controller.customerAddressModel.value.title = newValue?.trim();
+          } else {
+            controller.receiverAddressModel.value.title = newValue?.trim();
+          }
+        },
+      );
+    });
   }
+}
 
-  AtomicTextFormField addressTitle(String incoming) {
-    return AtomicTextFormField(
-      title: "Adres Adı",
-      fontColor: Colors.grey.shade600,
-      fontSize: 14.sp,
-      validator: (value) {
-        if (value?.isEmpty == true) {
-          return "Boş Geçilemez";
-        }
-        return null;
-      },
-      onSaved: (newValue) {
-        if (incoming.contains("customer")) {
-          controller.customerAddressModel.value.title = newValue?.trim();
-        } else {
-          controller.receiverAddressModel.value.title = newValue?.trim();
-        }
-      },
-    );
+class _Street extends StatelessWidget {
+  const _Street({
+    required this.incoming,
+  });
+
+  final String incoming;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return AtomicTextFormField(
+        title: "Sokak",
+        fontColor: Colors.grey.shade600,
+        validator: (value) {
+          if (value?.isEmpty == true) {
+            return "Boş Geçilemez";
+          }
+          return null;
+        },
+        onSaved: (newValue) {
+          if (incoming.contains("customer")) {
+            controller.customerAddressModel.value.street = newValue?.trim();
+          } else {
+            controller.receiverAddressModel.value.street = newValue?.trim();
+          }
+        },
+        fontSize: 15.sp,
+      );
+    });
   }
+}
 
-  Widget street(String incoming) {
-    return AtomicTextFormField(
-      title: "Sokak",
-      fontColor: Colors.grey.shade600,
-      validator: (value) {
-        if (value?.isEmpty == true) {
-          return "Boş Geçilemez";
-        }
-        return null;
-      },
-      onSaved: (newValue) {
-        if (incoming.contains("customer")) {
-          controller.customerAddressModel.value.street = newValue?.trim();
-        } else {
-          controller.receiverAddressModel.value.street = newValue?.trim();
-        }
-      },
-      fontSize: 15.sp,
-    );
-  }
+class _ApartmentAndFloorNo extends StatelessWidget {
+  const _ApartmentAndFloorNo({
+    required this.incoming,
+  });
 
-  Widget apartmentAndFloorNo(String incoming) {
+  final String incoming;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       mainAxisSize: MainAxisSize.max,
       children: [
-        Expanded(child: buildingNo(incoming)),
-        Expanded(child: floorNo(incoming)),
-        Expanded(child: apartmentNo(incoming))
+        Expanded(child: _BuildingNo(incoming: incoming)),
+        Expanded(child: _FoorNo(incoming: incoming)),
+        Expanded(child: _ApartmentNo(incoming: incoming))
       ],
     );
   }
+}
 
-  AtomicTextFormField buildingNo(String incoming) {
-    return AtomicTextFormField(
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      title: "Bina No",
-      fontColor: Colors.grey.shade600,
-      keyboardType: TextInputType.number,
-      validator: (value) {
-        if (value?.isEmpty == true) {
-          return "Boş Geçilmez";
-        }
-        return null;
-      },
-      onSaved: (newValue) {
-        if (incoming.contains("customer")) {
-          controller.customerAddressModel.value.buildingNo = newValue?.trim();
-        } else {
-          controller.receiverAddressModel.value.buildingNo = newValue?.trim();
-        }
-      },
-      fontSize: 13.sp,
-    );
-  }
+class _BuildingNo extends StatelessWidget {
+  const _BuildingNo({
+    required this.incoming,
+  });
 
-  Container floorNo(String incoming) {
-    return Container(
-      margin: CustomPadding.onlyHorizontalInset(10),
-      child: AtomicTextFormField(
+  final String incoming;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return AtomicTextFormField(
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        title: "Kat",
+        title: "Bina No",
         fontColor: Colors.grey.shade600,
         keyboardType: TextInputType.number,
         validator: (value) {
@@ -264,145 +329,217 @@ class CreateAddressWidgets {
         },
         onSaved: (newValue) {
           if (incoming.contains("customer")) {
-            controller.customerAddressModel.value.floor =
-                int.parse(newValue?.trim() ?? "");
+            controller.customerAddressModel.value.buildingNo = newValue?.trim();
           } else {
-            controller.receiverAddressModel.value.floor =
-                int.parse(newValue?.trim() ?? "");
+            controller.receiverAddressModel.value.buildingNo = newValue?.trim();
           }
         },
         fontSize: 13.sp,
-      ),
-    );
+      );
+    });
   }
+}
 
-  AtomicTextFormField apartmentNo(String incoming) {
-    return AtomicTextFormField(
-      title: "Daire No",
-      fontColor: Colors.grey.shade600,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      keyboardType: TextInputType.number,
-      validator: (value) {
-        if (value?.isEmpty == true) {
-          return "Boş Geçilmez";
-        }
-        return null;
-      },
-      onSaved: (newValue) {
-        if (incoming.contains("customer")) {
-          controller.customerAddressModel.value.apartmentNumber =
-              newValue?.trim();
-        } else {
-          controller.receiverAddressModel.value.apartmentNumber =
-              newValue?.trim();
-        }
-      },
-      fontSize: 13.sp,
-    );
-  }
+class _FoorNo extends StatelessWidget {
+  const _FoorNo({
+    required this.incoming,
+  });
 
-  Widget addressDescription(String incoming) {
-    return AtomicTextFormField(
-      title: "Adres Tarifi",
-      fontColor: Colors.grey.shade600,
-      validator: (value) {
-        if (value?.isEmpty == true) {
-          return "Boş Geçilmez";
-        }
-        return null;
-      },
-      onSaved: (newValue) {
-        if (incoming.contains("customer")) {
-          controller.customerAddressModel.value.description = newValue?.trim();
-        } else {
-          controller.receiverAddressModel.value.description = newValue?.trim();
-        }
-      },
-    );
-  }
+  final String incoming;
 
-  Widget receiverName() {
-    return AtomicTextFormField(
-      title: "Alıcı Adı Soyadı",
-      fontColor: Colors.grey.shade600,
-      validator: (value) {
-        if (value?.isEmpty == true) {
-          return "Boş Geçilmez";
-        }
-        return null;
-      },
-      onSaved: (newValue) {
-        controller.receiverAddressModel.value.nameSurname = newValue?.trim();
-      },
-    );
-  }
-
-  TextFormField receiverPhoneNumber() {
-    return TextFormField(
-      onSaved: (newValue) {
-        controller.receiverAddressModel.value.numberPhone = newValue?.trim();
-      },
-      keyboardType: TextInputType.number,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.white,
-        contentPadding: CustomPadding.onlyHorizontalInset(10),
-        labelText: "Alıcı GSM numarası",
-        labelStyle:
-            TextStyle(color: Colors.grey, fontFamily: "Arial", fontSize: 14.sp),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.r),
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return Container(
+        margin: CustomPadding.onlyHorizontalInset(10),
+        child: AtomicTextFormField(
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          title: "Kat",
+          fontColor: Colors.grey.shade600,
+          keyboardType: TextInputType.number,
+          validator: (value) {
+            if (value?.isEmpty == true) {
+              return "Boş Geçilmez";
+            }
+            return null;
+          },
+          onSaved: (newValue) {
+            if (incoming.contains("customer")) {
+              controller.customerAddressModel.value.floor =
+                  int.parse(newValue?.trim() ?? "");
+            } else {
+              controller.receiverAddressModel.value.floor =
+                  int.parse(newValue?.trim() ?? "");
+            }
+          },
+          fontSize: 13.sp,
         ),
-      ),
-      maxLength: 11,
-      validator: (value) {
-        if (value?.isNotEmpty == true) {
-          if (value!.length < 11) {
-            return "Lütfen 11 haneli bir telefon numarası giriniz";
+      );
+    });
+  }
+}
+
+class _ApartmentNo extends StatelessWidget {
+  const _ApartmentNo({
+    required this.incoming,
+  });
+
+  final String incoming;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return AtomicTextFormField(
+        title: "Daire No",
+        fontColor: Colors.grey.shade600,
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        keyboardType: TextInputType.number,
+        validator: (value) {
+          if (value?.isEmpty == true) {
+            return "Boş Geçilmez";
           }
-        } else {
-          return "Boş Geçilemez";
-        }
-        return null;
-      },
-    );
+          return null;
+        },
+        onSaved: (newValue) {
+          if (incoming.contains("customer")) {
+            controller.customerAddressModel.value.apartmentNumber =
+                newValue?.trim();
+          } else {
+            controller.receiverAddressModel.value.apartmentNumber =
+                newValue?.trim();
+          }
+        },
+        fontSize: 13.sp,
+      );
+    });
   }
+}
 
-  Widget receiverMail() {
-    return AtomicTextFormField(
-      title: "Alıcı E-Posta",
-      fontColor: Colors.grey.shade600,
-      validator: (value) {
-        if (value?.isEmpty == true) {
-          return "Boş Geçilmez";
-        }
-        return null;
-      },
-      onSaved: (newValue) {
-        controller.receiverAddressModel.value.email = newValue?.trim();
-      },
-    );
-  }
-
-  Column receiverInformation() {
+class _ReceiverInformation extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        receiverName(),
+        _ReceiverName(),
         SizedBox(height: 10.h),
-        receiverPhoneNumber(),
+        _ReceiverPhoneNumber(),
         SizedBox(height: 10.h),
-        receiverMail(),
+        _ReceiverMail(),
         SizedBox(height: 10.h),
       ],
     );
   }
+}
 
-  Future<void> getNeighbourhoodList(
-      RxList<NeighbourhoodModel> neighbourhoodList, int districtId) async {
-    Services service = Services();
-    neighbourhoodList.value = await service.getNeighbourhoodList(
-        districtId, controller.accessToken.value);
+class _ReceiverMail extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return AtomicTextFormField(
+        title: "Alıcı E-Posta",
+        fontColor: Colors.grey.shade600,
+        validator: (value) {
+          if (value?.isEmpty == true) {
+            return "Boş Geçilmez";
+          }
+          return null;
+        },
+        onSaved: (newValue) {
+          controller.receiverAddressModel.value.email = newValue?.trim();
+        },
+      );
+    });
+  }
+}
+
+class _ReceiverPhoneNumber extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return TextFormField(
+        onSaved: (newValue) {
+          controller.receiverAddressModel.value.numberPhone = newValue?.trim();
+        },
+        keyboardType: TextInputType.number,
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          contentPadding: CustomPadding.onlyHorizontalInset(10),
+          labelText: "Alıcı GSM numarası",
+          labelStyle: TextStyle(
+              color: Colors.grey, fontFamily: "Arial", fontSize: 14.sp),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.r),
+          ),
+        ),
+        maxLength: 11,
+        validator: (value) {
+          if (value?.isNotEmpty == true) {
+            if (value!.length < 11) {
+              return "Lütfen 11 haneli bir telefon numarası giriniz";
+            }
+          } else {
+            return "Boş Geçilemez";
+          }
+          return null;
+        },
+      );
+    });
+  }
+}
+
+class _ReceiverName extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return AtomicTextFormField(
+        title: "Alıcı Adı Soyadı",
+        fontColor: Colors.grey.shade600,
+        validator: (value) {
+          if (value?.isEmpty == true) {
+            return "Boş Geçilmez";
+          }
+          return null;
+        },
+        onSaved: (newValue) {
+          controller.receiverAddressModel.value.nameSurname = newValue?.trim();
+        },
+      );
+    });
+  }
+}
+
+class _AddressDescription extends StatelessWidget {
+  const _AddressDescription({
+    required this.incoming,
+  });
+
+  final String incoming;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PartnerController>(builder: (controller) {
+      return AtomicTextFormField(
+        title: "Adres Tarifi",
+        fontColor: Colors.grey.shade600,
+        validator: (value) {
+          if (value?.isEmpty == true) {
+            return "Boş Geçilmez";
+          }
+          return null;
+        },
+        onSaved: (newValue) {
+          if (incoming.contains("customer")) {
+            controller.customerAddressModel.value.description =
+                newValue?.trim();
+          } else {
+            controller.receiverAddressModel.value.description =
+                newValue?.trim();
+          }
+        },
+      );
+    });
   }
 }

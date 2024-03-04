@@ -96,15 +96,13 @@ class _PackageSendingPageWidgetsState extends State<PackageSendingPageWidgets>
               margin: CustomPadding.symmetricInset(15, 10),
               child: Column(
                 children: [
-                  Container(
-                    child: textWidget(
-                        title: parcelSize == "X-Large"
-                            ? "XL"
-                            : parcelSize.substring(0, 1),
-                        fontsize: 20.sp,
-                        color: Colors.grey.shade700,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  GeneralTextWidget(
+                      title: parcelSize == "X-Large"
+                          ? "XL"
+                          : parcelSize.substring(0, 1),
+                      fontsize: 20.sp,
+                      color: Colors.grey.shade700,
+                      fontWeight: FontWeight.bold),
                   SizedBox(height: 5.w),
                   InkWell(
                     onTap: () {
@@ -184,11 +182,11 @@ class _PackageSendingPageWidgetsState extends State<PackageSendingPageWidgets>
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            textWidget(
+            GeneralTextWidget(
                 title: quantity.toString(),
                 fontsize: 12.sp,
                 color: Colors.black),
-            textWidget(title: "Adet", fontsize: 12.sp)
+            GeneralTextWidget(title: "Adet", fontsize: 12.sp)
           ],
         ),
         IconButton(
@@ -239,13 +237,13 @@ class _PackageSendingPageWidgetsState extends State<PackageSendingPageWidgets>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  textWidget(
+                  GeneralTextWidget(
                       title: "Kutu Ölçüsü :",
                       fontsize: 14.sp,
                       color: Colors.grey),
                   Container(
                     margin: CustomPadding.only(right: 5),
-                    child: textWidget(
+                    child: GeneralTextWidget(
                         title: model.cargoParcelTypeName!,
                         fontWeight: FontWeight.bold,
                         fontsize: 14.sp,
@@ -263,13 +261,13 @@ class _PackageSendingPageWidgetsState extends State<PackageSendingPageWidgets>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  textWidget(
+                  GeneralTextWidget(
                       title: "En Fazla Ağırlık",
                       fontsize: 14.sp,
                       color: Colors.grey),
                   Container(
                     margin: CustomPadding.only(right: 5),
-                    child: textWidget(
+                    child: GeneralTextWidget(
                         title: model.maxSize!,
                         fontsize: 14.sp,
                         color: Colors.grey,
@@ -282,13 +280,13 @@ class _PackageSendingPageWidgetsState extends State<PackageSendingPageWidgets>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  textWidget(
+                  GeneralTextWidget(
                       title: "En Uzun Kenar En Fazla",
                       fontsize: 14.sp,
                       color: Colors.grey),
                   Container(
                     margin: CustomPadding.only(right: 5),
-                    child: textWidget(
+                    child: GeneralTextWidget(
                         title: model.desiSize!,
                         fontsize: 14.sp,
                         color: Colors.grey,
@@ -301,13 +299,13 @@ class _PackageSendingPageWidgetsState extends State<PackageSendingPageWidgets>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  textWidget(
+                  GeneralTextWidget(
                       title: "Örnek koli boyutu",
                       fontsize: 14.sp,
                       color: Colors.grey),
                   Container(
                     margin: CustomPadding.only(right: 5),
-                    child: textWidget(
+                    child: GeneralTextWidget(
                         title: "30cm x 22cm x 22cm",
                         fontsize: 14.sp,
                         color: Colors.grey,
@@ -318,7 +316,7 @@ class _PackageSendingPageWidgetsState extends State<PackageSendingPageWidgets>
               SizedBox(height: 10.h),
               Container(
                 margin: CustomPadding.only(right: 5),
-                child: textWidget(
+                child: GeneralTextWidget(
                     title: model.information ?? "",
                     fontsize: 14.sp,
                     color: Colors.grey),

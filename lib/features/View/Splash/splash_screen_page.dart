@@ -26,13 +26,20 @@ class _SplashScreenState extends State<SplashScreen> with SplashScreenMixin {
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xFF001220),
-        body: Center(
-          child: Image.asset(
-            "images/app_icon.png",
-            width: 250.w,
-            height: 250.h,
-          ),
-        ),
+        body: _SplashScreenBody(),
+      ),
+    );
+  }
+}
+
+class _SplashScreenBody extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Image.asset(
+        "images/app_icon.png",
+        width: 250.w,
+        height: 250.h,
       ),
     );
   }

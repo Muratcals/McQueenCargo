@@ -62,11 +62,11 @@ class _CallCourierDetailPageState extends State<CallCourierDetailPage>
 
   AppBar cargoDetailAppBar() {
     return AppBar(
-      leading: appBarIcon(),
-      flexibleSpace: appbarFlexibleSpace(),
+      leading: AppBarIcon(),
+      flexibleSpace: AppbarFlexibleSpace(),
       toolbarHeight: 30.h,
       centerTitle: true,
-      title: textWidget(
+      title: GeneralTextWidget(
           title: "Gönderi Detay", fontsize: 14.sp, color: Colors.white),
       actions: [
         IconButton(
@@ -95,7 +95,7 @@ class _CallCourierDetailPageState extends State<CallCourierDetailPage>
           child: Scaffold(
             appBar: AppBar(
               leading: Container(),
-              flexibleSpace: appbarFlexibleSpace(),
+              flexibleSpace: AppbarFlexibleSpace(),
               toolbarHeight: 30.h,
               centerTitle: true,
               actions: [
@@ -105,7 +105,7 @@ class _CallCourierDetailPageState extends State<CallCourierDetailPage>
                     },
                     icon: const Icon(Icons.close,color: Colors.white,))
               ],
-              title: textWidget(
+              title: GeneralTextWidget(
                   title: "Kargo Bilgileri",
                   fontsize: 14.sp,
                   color: Colors.white),
@@ -190,9 +190,9 @@ class _CallCourierDetailPageState extends State<CallCourierDetailPage>
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              textWidget(title: title, fontsize: 12.sp, color: Colors.black),
+              GeneralTextWidget(title: title, fontsize: 12.sp, color: Colors.black),
               SizedBox(height: 5.h),
-              textWidget(
+              GeneralTextWidget(
                   title: subTitle,
                   fontsize: 12.sp,
                   color: Colors.black,
@@ -306,8 +306,8 @@ class _CallCourierDetailPageState extends State<CallCourierDetailPage>
       crossAxisAlignment:
           center == 1 ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
-        textWidget(title: title, fontsize: 12.sp, color: Colors.grey),
-        textWidget(
+        GeneralTextWidget(title: title, fontsize: 12.sp, color: Colors.grey),
+        GeneralTextWidget(
             title: subTitle,
             fontsize: 12.sp,
             color: Colors.black,

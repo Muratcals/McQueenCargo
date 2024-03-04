@@ -5,14 +5,14 @@ import 'package:mc_queen_cargo/features/Service/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mc_queen_cargo/features/View/Address/address_page.dart';
-import 'package:mc_queen_cargo/features/View/Address/address_widgets.dart';
+
+
 
 mixin AddressMixin on State<AddressPage> {
   String incoming = Get.arguments["incoming"];
   String process = Get.arguments["process"];
   RxString searchableString = "".obs;
   Services service = Services();
-  AdressWidgets widgets = AdressWidgets();
   PartnerController controller = Get.find();
   RxList<AddressModel> inializeList = <AddressModel>[].obs;
   List<AddressModel> customerAddressList = [];

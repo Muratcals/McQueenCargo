@@ -1,4 +1,6 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:mc_queen_cargo/features/Controller/partner_controller.dart';
+import 'package:mc_queen_cargo/features/Model/post_courier_model.dart';
 import 'package:mc_queen_cargo/features/View/GetCourier/Approve/approve_page.dart';
 import 'package:mc_queen_cargo/features/Model/additional_service_model.dart';
 import 'package:mc_queen_cargo/features/Service/services.dart';
@@ -23,7 +25,31 @@ mixin ApproveMixin on State<ApprovePage> {
     sumPrice = tax + price;
   }
 
-  updateAdditionalService() {
+  void onPressed() {
+    visibilty.value = true;
+    controller.getCourierModel.value.callCourierOk = false;
+    controller.getCourierModel.value.cargoTransportationConditionsId = 1;
+    controller.getCourierModel.value.price =
+        double.parse(sumPrice.toStringAsFixed(2));
+    service
+        .postCargo(
+            model: controller.getCourierModel.value,
+            accessToken: controller.accessToken.value)
+        .then((value) {
+      EasyLoading.showSuccess(value);
+      controller.getCourierModel.value = PostCourierModel();
+      _updateAdditionalService();
+      Get.until((route) => Get.currentRoute == "/main");
+      // Get.offAllNamed("/main",arguments: {
+      //   "userId":0
+      // });
+    }).onError((error, stackTrace) {
+      EasyLoading.showError(error.toString());
+      visibilty.value = false;
+    });
+  }
+
+  void _updateAdditionalService() {
     controller.packageProcurementServices.clear();
     controller.packageProcurementServices.addAll([
       AdditionalServiceModel(name: "Adresten Alım", price: 24.46),

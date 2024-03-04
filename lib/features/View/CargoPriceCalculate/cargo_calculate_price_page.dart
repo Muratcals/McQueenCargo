@@ -1,5 +1,6 @@
 import 'package:mc_queen_cargo/features/AtomicWidgets/atomic_orange_button.dart';
 import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
+import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/cargo_calculate_price_controller.dart';
 import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/cargo_calculate_price_mixin.dart';
 import 'package:mc_queen_cargo/main_mixin.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,12 @@ class CargoPricaCalculatePage extends StatefulWidget {
 class _CargoPricaCalculatePageState extends State<CargoPricaCalculatePage>
     with CargoPricaCalculateMixin {
   @override
+  void dispose() {
+    Get.delete<CalculatePriceController>();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       child: SingleChildScrollView(
@@ -28,54 +35,45 @@ class _CargoPricaCalculatePageState extends State<CargoPricaCalculatePage>
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              selectedCustomerAddressContainer(),
+              _SelectedCustomerAddressContainer(),
               SizedBox(height: 10.h),
-              selectedRecevierAddressContainer(),
-              nextButton()
+              _SelectedRecevierAddressContainer(),
+              NextButton()
             ],
           ),
         ),
       ),
     );
   }
+}
 
-  Container nextButton() {
-    return Container(
-      margin: CustomPadding.symmetricInset(50, 25),
-      child: recevierAddressModel != null && customerAddressModel != null
-          ? AtomicOrangeButton(
-              onPressed: () {
-                Get.toNamed("/shipmentType");
-              },
-              title: "Devam Et")
-          : Container(),
-    );
-  }
-
-  Widget selectedCustomerAddressContainer() {
-    return Container(
-      color: Colors.white,
-      width: 190.w,
-      height: 89.h,
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            padding: CustomPadding.onlyVerticalInset(10),
-            child: checkImageWidget(
-                iconData: "images/future_location_icon.png",
-                state: customerAddressModel == null ? false : true),
-          ),
-          Divider(color: Colors.grey, height: 1.h),
-          InkWell(
+class _SelectedCustomerAddressContainer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetX<CalculatePriceController>(builder: (controller) {
+      return Container(
+        color: Colors.white,
+        width: 190.w,
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              padding: CustomPadding.onlyVerticalInset(10),
+              child: _CheckImageWidget(
+                  iconData: "images/future_location_icon.png",
+                  state: controller.customerAddressModel.value == null
+                      ? false
+                      : true),
+            ),
+            Divider(color: Colors.grey, height: 1.h),
+            InkWell(
               onTap: () async {
                 var result = await Get.toNamed("/addressPage", arguments: {
                   "incoming": "customer",
                   "process": "getCourier"
                 });
                 if (result != null) {
-                  customerAddressModel = result;
-                  setState(() {});
+                  controller.customerAddressModel.value = result;
                 }
               },
               child: Container(
@@ -83,65 +81,85 @@ class _CargoPricaCalculatePageState extends State<CargoPricaCalculatePage>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    textWidget(
-                        title: customerAddressModel == null
+                    GeneralTextWidget(
+                        title: controller.customerAddressModel.value == null
                             ? "Nereden?"
-                            : "${customerAddressModel!.districtName}/${customerAddressModel!.provinceName}",
+                            : "${controller.customerAddressModel.value!.districtName}/${controller.customerAddressModel.value!.provinceName}",
                         fontsize: 14.sp),
                     const Icon(Icons.chevron_right),
                   ],
                 ),
-              ))
-        ],
-      ),
-    );
-  }
-
-  Widget selectedRecevierAddressContainer() {
-    return Container(
-      color: Colors.white,
-      width: 190.w,
-      height: 89.h,
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            padding: CustomPadding.onlyVerticalInset(10),
-            child: checkImageWidget(
-                iconData: "images/is_will_location_icon.png",
-                state: recevierAddressModel == null ? false : true),
-          ),
-          Divider(color: Colors.grey, height: 1.h),
-          InkWell(
-            onTap: () async {
-              var result = await Get.toNamed("/addressPage",
-                  arguments: {"incoming": "receiver", "process": "getCourier"});
-              if (result != null) {
-                recevierAddressModel = result;
-                setState(() {});
-              }
-            },
-            child: Container(
-              margin: CustomPadding.symmetricInset(10, 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  textWidget(
-                      title: recevierAddressModel == null
-                          ? "Nereye?"
-                          : "${recevierAddressModel!.districtName}/${recevierAddressModel!.provinceName}",
-                      fontsize: 14.sp),
-                  const Icon(Icons.chevron_right),
-                ],
               ),
-            ),
-          )
-        ],
-      ),
-    );
+            )
+          ],
+        ),
+      );
+    });
   }
+}
 
-  Stack checkImageWidget({required String iconData, bool state = false}) {
+class _SelectedRecevierAddressContainer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetX<CalculatePriceController>(builder: (controller) {
+      return Container(
+        color: Colors.white,
+        width: 190.w,
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              padding: CustomPadding.onlyVerticalInset(10),
+              child: _CheckImageWidget(
+                  iconData: "images/is_will_location_icon.png",
+                  state: controller.recevierAddressModel.value?.id == null
+                      ? false
+                      : true),
+            ),
+            Divider(color: Colors.grey, height: 1.h),
+            InkWell(
+              onTap: () async {
+                var result = await Get.toNamed("/addressPage", arguments: {
+                  "incoming": "receiver",
+                  "process": "getCourier"
+                });
+                if (result != null) {
+                  controller.recevierAddressModel.value = result;
+                }
+              },
+              child: Container(
+                margin: CustomPadding.symmetricInset(10, 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GeneralTextWidget(
+                        title: controller.recevierAddressModel.value?.id == null
+                            ? "Nereye?"
+                            : "${controller.recevierAddressModel.value!.districtName}/${controller.recevierAddressModel.value!.provinceName}",
+                        fontsize: 14.sp),
+                    const Icon(Icons.chevron_right),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    });
+  }
+}
+
+class _CheckImageWidget extends StatelessWidget {
+  const _CheckImageWidget({
+    required this.iconData,
+    required this.state,
+  });
+
+  final String iconData;
+  final bool state;
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: [
         Align(alignment: Alignment.center, child: Image.asset(iconData)),
@@ -164,5 +182,24 @@ class _CargoPricaCalculatePageState extends State<CargoPricaCalculatePage>
         )
       ],
     );
+  }
+}
+
+class NextButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetX<CalculatePriceController>(builder: (controller) {
+      return Container(
+        margin: CustomPadding.symmetricInset(50, 25),
+        child: controller.recevierAddressModel.value?.id != null &&
+                controller.customerAddressModel.value?.id != null
+            ? AtomicOrangeButton(
+                onPressed: () {
+                  Get.toNamed("/shipmentType");
+                },
+                title: "Devam Et")
+            : Container(),
+      );
+    });
   }
 }

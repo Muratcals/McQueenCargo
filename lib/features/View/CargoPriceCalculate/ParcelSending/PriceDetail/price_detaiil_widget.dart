@@ -9,9 +9,9 @@ class PriceDetailWidget {
   AppBar appBar(String title, PriceDetailModel model, String incoming) {
     return AppBar(
       centerTitle: true,
-      title: textWidget(title: title, fontsize: 14.sp, color: Colors.white),
-      flexibleSpace: appbarFlexibleSpace(),
-      leading: appBarIcon(),
+      title: GeneralTextWidget(title: title, fontsize: 14.sp, color: Colors.white),
+      flexibleSpace: AppbarFlexibleSpace(),
+      leading: AppBarIcon(),
       toolbarHeight: 30.h,
       bottom: appBarBottomItems(model, incoming),
     );
@@ -32,7 +32,7 @@ class PriceDetailWidget {
             children: [
               Container(
                 padding: CustomPadding.allInset(15),
-                child: textWidget(
+                child: GeneralTextWidget(
                     title: "${incoming.toUpperCase()} / STANDART",
                     fontsize: 15.sp,
                     fontWeight: FontWeight.bold),
@@ -57,11 +57,11 @@ class PriceDetailWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  textWidget(
+                  GeneralTextWidget(
                       title: "Genel Toplam",
                       fontsize: 16.sp,
                       color: Colors.green),
-                  textWidget(
+                  GeneralTextWidget(
                       title:
                           "${(model.additionalServicePrice + model.kdv + model.transportPrice).toStringAsFixed(2)} TL",
                       fontsize: 14.sp,
@@ -80,8 +80,8 @@ class PriceDetailWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        textWidget(title: title, fontsize: 14.sp, color: Colors.grey),
-        textWidget(
+        GeneralTextWidget(title: title, fontsize: 14.sp, color: Colors.grey),
+        GeneralTextWidget(
             title: "${subTitle.toStringAsFixed(2)} TL",
             fontsize: 14.sp,
             fontWeight: FontWeight.bold),

@@ -1,25 +1,17 @@
-import 'package:mc_queen_cargo/features/Controller/partner_controller.dart';
-import 'package:mc_queen_cargo/main_mixin.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
-mixin ShipmentTypeWidgets {
-  PartnerController controller = Get.find();
-  InkWell cancelButton() {
-    return InkWell(
-      onTap: () {
-        Get.back();
-      },
-      child: Container(
-          alignment: Alignment.center,
-          margin: EdgeInsets.only(right: 10.w),
-          child: textWidget(
-              title: "İptal Et", fontsize: 13.sp, color: Colors.white)),
-    );
+
+part of '../ShipmentType/shipment_type_page.dart';
+
+class _CancelButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
+}
 
-  Container fileOrDocumentsWidget() {
+class _FileOrDocumentsWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
       width: 170.w,
@@ -52,7 +44,8 @@ mixin ShipmentTypeWidgets {
                 children: [
                   Container(
                       padding: EdgeInsets.only(left: 10.w),
-                      child: textWidget(title: "Dosya-Evrak", fontsize: 14.sp)),
+                      child: GeneralTextWidget(
+                          title: "Dosya-Evrak", fontsize: 14.sp)),
                   const Icon(Icons.chevron_right)
                 ],
               ),
@@ -62,8 +55,13 @@ mixin ShipmentTypeWidgets {
       ),
     );
   }
+}
 
-  Container parcelOrPackageWidget() {
+class _ParcelOrPackageWidget extends StatelessWidget {
+
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
       width: 170.w,
@@ -93,7 +91,8 @@ mixin ShipmentTypeWidgets {
                 children: [
                   Container(
                       padding: EdgeInsets.only(left: 10.w),
-                      child: textWidget(title: "Koli-Paket", fontsize: 14.sp)),
+                      child: GeneralTextWidget(
+                          title: "Koli-Paket", fontsize: 14.sp)),
                   const Icon(Icons.chevron_right)
                 ],
               ),

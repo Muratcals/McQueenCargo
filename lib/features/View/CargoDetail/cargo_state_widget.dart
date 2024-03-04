@@ -27,39 +27,120 @@ class _CargoStateWidgetState extends State<CargoStateWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            textWidget(
+            GeneralTextWidget(
                 title: widget.model.cargoStatusName ?? "",
                 fontsize: 14.sp,
                 color: Colors.white),
             SizedBox(height: 10.h),
             Row(
               children: [
-                cargoMovementWidget(index: 1, icon: "images/lifter.png"),
-                spaceWidget(),
-                cargoMovementWidget(index: 2, icon: "images/delivery.png"),
-                spaceWidget(),
-                cargoMovementWidget(index: 5, icon: "images/post_office.png"),
-                spaceWidget(),
-                cargoMovementWidget(index: 6, icon: "images/courier.png"),
-                spaceWidget(),
-                cargoMovementWidget(
-                    index: 7, icon: "images/delivery_service.png")
+                _CargoMovementWidget(widget: widget, index: 1, icon: "images/lifter.png"),
+                _SpaceWidget(),
+                _CargoMovementWidget(widget: widget, index: 2, icon: "images/delivery.png"),
+                _SpaceWidget(),
+                _CargoMovementWidget(widget: widget, index: 5, icon: "images/post_office.png"),
+                _SpaceWidget(),
+                _CargoMovementWidget(widget: widget, index: 6, icon: "images/courier.png"),
+                _SpaceWidget(),
+                _CargoMovementWidget(widget: widget, index: 7, icon: "images/delivery_service.png")
               ],
             ),
-            bottomLineWidget()
+            _BottomLineWidget(widget: widget)
           ],
         ),
       ),
     );
   }
+}
 
-  Container spaceWidget() {
+class _SpaceWidget extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: ((Get.width - 120) / 4),
     );
   }
+}
 
-  Column cargoMovementWidget({required int index, required String icon}) {
+class _BottomLineWidget extends StatelessWidget {
+  const _BottomLineWidget({
+    required this.widget,
+  });
+
+  final CargoStateWidget widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _CargoStateContainer(),
+        _LineWidget(widget: widget, index: 2),
+        _CargoStateContainer(),
+        _LineWidget(widget: widget, index: 5),
+        _CargoStateContainer(),
+        _LineWidget(widget: widget, index: 6),
+        _CargoStateContainer(),
+        _LineWidget(widget: widget, index: 7),
+        _CargoStateContainer(),
+      ],
+    );
+  }
+}
+
+class _LineWidget extends StatelessWidget {
+  const _LineWidget({
+    required this.widget,
+    required this.index,
+  });
+
+  final CargoStateWidget widget;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 2.h,
+      width: ((Get.width - 40) / 4),
+      color: widget.model.cargoStatusId! >= index ? Colors.red : Colors.white,
+      margin: CustomPadding.only(top: 8),
+    );
+  }
+}
+
+class _CargoStateContainer extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: CustomPadding.only(top: 8),
+      child: CircleAvatar(
+        backgroundColor: Colors.white,
+        radius: 10.r,
+        child: Icon(
+          Icons.done,
+          size: 10.r,
+          color: Colors.red,
+        ),
+      ),
+    );
+  }
+}
+
+class _CargoMovementWidget extends StatelessWidget {
+  const _CargoMovementWidget({
+    required this.widget,
+    required this.index,
+    required this.icon,
+  });
+
+  final CargoStateWidget widget;
+  final int index;
+  final String icon;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,47 +169,6 @@ class _CargoStateWidgetState extends State<CargoStateWidget> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget bottomLineWidget() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        cargoStateContainer(),
-        lineWidget(index: 2),
-        cargoStateContainer(),
-        lineWidget(index: 5),
-        cargoStateContainer(),
-        lineWidget(index: 6),
-        cargoStateContainer(),
-        lineWidget(index: 7),
-        cargoStateContainer(),
-      ],
-    );
-  }
-
-  Container lineWidget({required int index}) {
-    return Container(
-      height: 2.h,
-      width: ((Get.width - 40) / 4),
-      color: widget.model.cargoStatusId! >= index ? Colors.red : Colors.white,
-      margin: CustomPadding.only(top: 8),
-    );
-  }
-
-  Container cargoStateContainer() {
-    return Container(
-      padding: CustomPadding.only(top: 8),
-      child: CircleAvatar(
-        backgroundColor: Colors.white,
-        radius: 10.r,
-        child: Icon(
-          Icons.done,
-          size: 10.r,
-          color: Colors.red,
-        ),
-      ),
     );
   }
 }

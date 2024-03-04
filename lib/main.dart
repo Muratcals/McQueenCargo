@@ -2,9 +2,11 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mc_queen_cargo/features/Controller/partner_controller.dart';
+import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/cargo_calculate_price_controller.dart';
 import 'package:mc_queen_cargo/features/View/GetCourier/AddionatialService/additiona_service_page.dart';
 import 'package:mc_queen_cargo/features/View/GetCourier/Approve/approve_page.dart';
 import 'package:mc_queen_cargo/features/View/GetCourier/SelectedPostType/selected_post_type_page.dart';
+import 'package:mc_queen_cargo/features/View/GetCourier/get_courier_controller.dart';
 import 'package:mc_queen_cargo/features/View/GetCourier/get_courier_page.dart';
 import 'package:mc_queen_cargo/features/View/AddAddress/create_address_page.dart';
 import 'package:mc_queen_cargo/features/View/Address/address_page.dart';
@@ -14,6 +16,7 @@ import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/ParcelSending/P
 import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/ParcelSending/PriceInformation/price_information_page.dart';
 import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/ParcelSending/package_sending_page.dart';
 import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/ShipmentType/shipment_type_page.dart';
+import 'package:mc_queen_cargo/features/View/Login/login_controller.dart';
 import 'package:mc_queen_cargo/features/View/Login/login_page.dart';
 import 'package:mc_queen_cargo/features/View/Main/main_page.dart';
 import 'package:mc_queen_cargo/features/View/MyProfile/CustomerAddress/address_detail_page.dart';
@@ -44,6 +47,8 @@ void main() async {
               projectId: "mcqueencargo-858dd"))
       : Firebase.initializeApp();
   Get.put(PartnerController());
+  Get.put(LoginController());
+
   runApp(const MainApp());
 }
 
@@ -59,14 +64,15 @@ class _MainAppState extends State<MainApp> with MainAppMixin {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(360, 420),
-      child:
-          Obx(() => visibility.value ? defaultWidget() : notConnectionWidget()),
+      child: Obx(
+          () => visibility.value ? _DefaultWidget() : _NotConnectionWidget()),
     );
   }
+}
 
-  
-
-  GetMaterialApp defaultWidget() {
+class _DefaultWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return GetMaterialApp(
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -179,11 +185,8 @@ class _MainAppState extends State<MainApp> with MainAppMixin {
             transition: Transition.rightToLeft),
       ],
       onInit: () async {
-        print(await FirebaseMessaging.instance.getToken());
+        debugPrint(await FirebaseMessaging.instance.getToken());
         await FirebaseMessaging.instance.requestPermission();
-        FirebaseMessaging.onBackgroundMessage(
-          (message) async {},
-        );
       },
       theme: ThemeData(
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -194,14 +197,17 @@ class _MainAppState extends State<MainApp> with MainAppMixin {
       ),
     );
   }
+}
 
-  Widget notConnectionWidget() {
+class _NotConnectionWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          flexibleSpace: appbarFlexibleSpace(),
-          title: textWidget(
+          flexibleSpace: AppbarFlexibleSpace(),
+          title: GeneralTextWidget(
               title: "Bağlantı bulunamadı",
               fontsize: 14.sp,
               color: Colors.white),
@@ -209,7 +215,7 @@ class _MainAppState extends State<MainApp> with MainAppMixin {
           toolbarHeight: 30.h,
         ),
         body: Center(
-            child: textWidget(
+            child: GeneralTextWidget(
                 title: "İnternet bağlantınızı kontrol ediniz",
                 fontsize: 14.sp)),
       ),

@@ -1,8 +1,10 @@
+import 'package:get/get.dart';
 import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
-import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/ShipmentType/shipment_type_mixin.dart';
 import 'package:mc_queen_cargo/main_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+part  '../ShipmentType/shipment_type_widget.dart';
 
 class ShipmentTypePage extends StatefulWidget {
   const ShipmentTypePage({super.key});
@@ -11,19 +13,18 @@ class ShipmentTypePage extends StatefulWidget {
   State<ShipmentTypePage> createState() => _ShipmentTypePageState();
 }
 
-class _ShipmentTypePageState extends State<ShipmentTypePage>
-    with ShipmentTypeWidgets {
+class _ShipmentTypePageState extends State<ShipmentTypePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
-        actions: [cancelButton()],
+        actions: [_CancelButton()],
         toolbarHeight: 28.h,
-        title: textWidget(
+        title: GeneralTextWidget(
             title: "Gönderi Türü", fontsize: 13.sp, color: Colors.white),
-        flexibleSpace: appbarFlexibleSpace(),
-        leading: appBarIcon(),
+        flexibleSpace: AppbarFlexibleSpace(),
+        leading: AppBarIcon(),
         centerTitle: true,
       ),
       body: Container(
@@ -32,9 +33,9 @@ class _ShipmentTypePageState extends State<ShipmentTypePage>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              fileOrDocumentsWidget(),
+              _FileOrDocumentsWidget(),
               SizedBox(height: 15.h),
-              parcelOrPackageWidget()
+              _ParcelOrPackageWidget()
             ],
           ),
         ),

@@ -60,9 +60,9 @@ class _ProcumentServiceState extends State<ProcumentService> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                textWidget(
+                GeneralTextWidget(
                     title: model.name, fontsize: 13.sp, color: Colors.grey),
-                textWidget(
+                GeneralTextWidget(
                     title: model.price.toString(),
                     fontsize: 14.sp,
                     fontWeight: FontWeight.bold,
@@ -92,7 +92,7 @@ class _ProcumentServiceState extends State<ProcumentService> {
         color: selectedProcurement != index ? Colors.white : Colors.green,
         padding: CustomPadding.onlyVerticalInset(3),
         alignment: Alignment.center,
-        child: textWidget(
+        child: GeneralTextWidget(
             title: selectedProcurement != index ? "+" : "✓",
             fontsize: 14.sp,
             color: selectedProcurement != index ? Colors.black : Colors.white),
@@ -120,7 +120,6 @@ class _ProcumentServiceState extends State<ProcumentService> {
           double deliveryPrice = controller.fileDeliveryServices[index].price -
               controller.fileDeliveryServices[selectedDelivery].price;
           widget.onPressed(deliveryPrice, index);
-
           selectedDelivery = index;
         });
       },
@@ -128,7 +127,7 @@ class _ProcumentServiceState extends State<ProcumentService> {
         color: selectedDelivery != index ? Colors.white : Colors.green,
         padding: CustomPadding.onlyVerticalInset(3),
         alignment: Alignment.center,
-        child: textWidget(
+        child: GeneralTextWidget(
             title: selectedDelivery != index ? "+" : "✓",
             fontsize: 14.sp,
             color: selectedDelivery != index ? Colors.black : Colors.white),
@@ -156,9 +155,9 @@ class _ProcumentServiceState extends State<ProcumentService> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                textWidget(
+                GeneralTextWidget(
                     title: model.name, fontsize: 13.sp, color: Colors.grey),
-                textWidget(
+                GeneralTextWidget(
                     title: model.price.toString(),
                     fontsize: 14.sp,
                     fontWeight: FontWeight.bold,
