@@ -5,6 +5,5 @@ import 'package:mc_queen_cargo/features/View/GetCourier/get_courier_controller.d
 
 mixin GetCourierMixin<T extends StatefulWidget> on State<T> {
   CarouselController carouselController = CarouselController();
-  
   GetCourierController controller =  Get.put(GetCourierController());
 }

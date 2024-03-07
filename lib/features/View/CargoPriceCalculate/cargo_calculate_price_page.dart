@@ -1,4 +1,6 @@
 import 'package:mc_queen_cargo/features/AtomicWidgets/atomic_orange_button.dart';
+import 'package:mc_queen_cargo/features/Model/adress_model.dart';
+import 'package:mc_queen_cargo/features/Model/receiver_address_model.dart';
 import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
 import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/cargo_calculate_price_controller.dart';
 import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/cargo_calculate_price_mixin.dart';
@@ -200,6 +202,6 @@ class NextButton extends StatelessWidget {
                 title: "Devam Et")
             : Container(),
       );
-    });
+    },);
   }
 }

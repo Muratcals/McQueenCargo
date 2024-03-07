@@ -2,11 +2,9 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mc_queen_cargo/features/Controller/partner_controller.dart';
-import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/cargo_calculate_price_controller.dart';
 import 'package:mc_queen_cargo/features/View/GetCourier/AddionatialService/additiona_service_page.dart';
 import 'package:mc_queen_cargo/features/View/GetCourier/Approve/approve_page.dart';
 import 'package:mc_queen_cargo/features/View/GetCourier/SelectedPostType/selected_post_type_page.dart';
-import 'package:mc_queen_cargo/features/View/GetCourier/get_courier_controller.dart';
 import 'package:mc_queen_cargo/features/View/GetCourier/get_courier_page.dart';
 import 'package:mc_queen_cargo/features/View/AddAddress/create_address_page.dart';
 import 'package:mc_queen_cargo/features/View/Address/address_page.dart';
@@ -48,7 +46,6 @@ void main() async {
       : Firebase.initializeApp();
   Get.put(PartnerController());
   Get.put(LoginController());
-
   runApp(const MainApp());
 }
 
