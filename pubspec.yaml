@@ -1,0 +1,56 @@
+name: mc_queen_cargo
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.2.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter 
+  flutter_screenutil: ^5.9.0
+  video_player: ^2.7.2
+  get: ^4.6.5
+  shared_preferences: ^2.2.2
+  date_field: ^3.0.5
+  date_format: ^2.0.7
+  intl: ^0.18.1
+  flutter_easyloading: ^3.0.5
+  dio: ^5.3.3
+  carousel_slider: ^4.2.1
+  searchable_listview: ^2.8.0
+  restart_app: ^1.2.1
+  connectivity_plus: ^5.0.2
+  qr_flutter: ^4.1.0
+  firebase_auth: ^4.10.0
+  firebase_core: ^2.17.0
+  firebase_messaging: ^14.6.8
+  permission_handler: ^11.3.0
+  flutter_bloc: ^8.1.4
+  json_serializable: ^6.7.1
+  build_runner: ^2.4.8
+  json_annotation: ^4.8.1
+  equatable: ^2.0.5
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - images/
+  fonts:
+    - family: "appBar"
+      fonts:
+        - asset: "font/Bacute.ttf"
+    - family: Arial
+      fonts:
+        - asset: font/arial.ttf
+    - family: Times
+      fonts:
+        - asset: font/times.ttf  
