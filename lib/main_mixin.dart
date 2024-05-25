@@ -37,7 +37,6 @@ mixin MainAppMixin on State<MainApp> {
 class AppbarFlexibleSpace extends StatelessWidget {
   const AppbarFlexibleSpace({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,6 +56,7 @@ class AppbarFlexibleSpace extends StatelessWidget {
 }
 
 class AppBarIcon extends StatelessWidget {
+  const AppBarIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +73,8 @@ class AppBarIcon extends StatelessWidget {
   }
 }
 
+/// [Color] color default [Colors.black]
+/// [FontWeight] fontWeight default [FontWeight.normal]
 class GeneralTextWidget extends StatelessWidget {
   const GeneralTextWidget({
     Key? key,

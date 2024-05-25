@@ -1,32 +1,8 @@
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:mc_queen_cargo/features/Controller/partner_controller.dart';
-import 'package:mc_queen_cargo/features/View/GetCourier/AddionatialService/additiona_service_page.dart';
-import 'package:mc_queen_cargo/features/View/GetCourier/Approve/approve_page.dart';
-import 'package:mc_queen_cargo/features/View/GetCourier/SelectedPostType/selected_post_type_page.dart';
-import 'package:mc_queen_cargo/features/View/GetCourier/get_courier_page.dart';
-import 'package:mc_queen_cargo/features/View/AddAddress/View/create_address_page.dart';
-import 'package:mc_queen_cargo/features/View/Address/address_page.dart';
-import 'package:mc_queen_cargo/features/View/CargoDetail/CallCourierDetail/call_courier_detail_page.dart';
-import 'package:mc_queen_cargo/features/View/CargoDetail/cargo_detail_page.dart';
-import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/ParcelSending/PriceDetail/View/price_detail_page.dart';
-import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/ParcelSending/PriceInformation/price_information_page.dart';
-import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/ParcelSending/package_sending_page.dart';
-import 'package:mc_queen_cargo/features/View/CargoPriceCalculate/ShipmentType/shipment_type_page.dart';
-import 'package:mc_queen_cargo/features/View/Login/login_controller.dart';
-import 'package:mc_queen_cargo/features/View/Login/login_page.dart';
-import 'package:mc_queen_cargo/features/View/Main/main_page.dart';
-import 'package:mc_queen_cargo/features/View/MyProfile/CustomerAddress/address_detail_page.dart';
-import 'package:mc_queen_cargo/features/View/MyProfile/ReceiverAddress/address_detail_page.dart';
-import 'package:mc_queen_cargo/features/View/MyProfile/UpdatePassword/update_password_page.dart';
-import 'package:mc_queen_cargo/features/View/MyProfile/UpdatePersonal/update_personal_page.dart';
-import 'package:mc_queen_cargo/features/View/MyProfile/my_profile_page.dart';
-import 'package:mc_queen_cargo/features/View/Register/ContactInformation/contact_information_page.dart';
-import 'package:mc_queen_cargo/features/View/Register/Password/password_page.dart';
-import 'package:mc_queen_cargo/features/View/Register/PersonalInformation/personal_information_page.dart';
-import 'package:mc_queen_cargo/features/View/Register/register_page.dart';
-import 'package:mc_queen_cargo/features/View/Splash/splash_screen_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mc_queen_cargo/features/GenerateRoute/generate_route.dart';
+import 'package:mc_queen_cargo/features/Constants/GetCourierCubit/post_courier_cubit.dart';
 import 'package:mc_queen_cargo/main_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -44,9 +20,10 @@ void main() async {
               messagingSenderId: "639272645378",
               projectId: "mcqueencargo-858dd"))
       : Firebase.initializeApp();
-  Get.put(PartnerController());
-  Get.put(LoginController());
-  runApp(const MainApp());
+  runApp(
+    BlocProvider(
+        create: (context) => GetCourierPostCubit(), child: const MainApp()),
+  );
 }
 
 class MainApp extends StatefulWidget {
@@ -76,115 +53,10 @@ class _DefaultWidget extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate
       ],
+      getPages: GenerateRoute.getPages(),
       supportedLocales: const [Locale('tr'), Locale('en')],
       debugShowCheckedModeBanner: false,
       builder: EasyLoading.init(),
-      getPages: [
-        GetPage(
-            name: "/",
-            page: () => const SplashScreen(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/main",
-            page: () => const MainPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/loginPage",
-            page: () => const LoginPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/registerPage",
-            page: () => const RegisterPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/personalInformationPage",
-            page: () => const PersonalInformationPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/passwordPage",
-            page: () => const PasswordPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/contactInformationPage",
-            page: () => const ContactInformationPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/getCourierPage",
-            page: () => const GetCourierPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/addressPage",
-            page: () => const AddressPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/customerAddressInformationPage",
-            page: () => const CustomerAddresssInformationPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/receiverAddressInformationPage",
-            page: () => const ReceiverAddressInformationPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/myProfilePage",
-            page: () => const MyProfilePage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/updatePersonal",
-            page: () => const UpdatePersonalPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/updatePassword",
-            page: () => const UpdatePasswordPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/shipmentType",
-            page: () => const ShipmentTypePage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/parcelSending",
-            page: () => const PackageSendingPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/priceDetail",
-            page: () => const PriceDetailPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/priceInformation",
-            page: () => const PriceInformationPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/getCourierShipmentType",
-            page: () => const SelectedPostType(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/additionalServicePage",
-            page: () => const AdditionalServicePage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/approvePage",
-            page: () => const ApprovePage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/createAddressPage",
-            page: () => const CreateAddressPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/cargoDetailPage",
-            page: () => const CargoDetailPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/getCourierPage",
-            page: () => const CreateAddressPage(),
-            transition: Transition.rightToLeft),
-        GetPage(
-            name: "/callCourierDetailPage",
-            page: () => const CallCourierDetailPage(),
-            transition: Transition.rightToLeft),
-      ],
-      onInit: () async {
-        debugPrint(await FirebaseMessaging.instance.getToken());
-        await FirebaseMessaging.instance.requestPermission();
-      },
       theme: ThemeData(
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
@@ -203,7 +75,7 @@ class _NotConnectionWidget extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          flexibleSpace:const AppbarFlexibleSpace(),
+          flexibleSpace: const AppbarFlexibleSpace(),
           title: GeneralTextWidget(
               title: "Bağlantı bulunamadı",
               fontsize: 14.sp,

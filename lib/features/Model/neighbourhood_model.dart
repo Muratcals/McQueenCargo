@@ -30,4 +30,5 @@ class NeighbourhoodModel {
         "neighbourhoodName": neighbourhoodName,
         "districtId": districtId,
     };
+    
 }

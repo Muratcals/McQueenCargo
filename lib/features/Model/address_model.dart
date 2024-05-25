@@ -120,25 +120,21 @@ class AddressModel extends Equatable {
     int? customerMobilId,
   }) {
     return AddressModel(
-        id: this.id = id ?? this.id,
-        countryId: this.countryId = countryId ?? this.countryId,
-        countryName: this.countryName = countryName ?? this.countryName,
-        provinceId: this.provinceId = provinceId ?? this.provinceId,
-        provinceName: this.provinceName = provinceName ?? this.provinceName,
-        districtId: this.districtId = districtId ?? this.districtId,
-        districtName: this.districtName = districtName ?? this.districtName,
-        neighbourhoodId: this.neighbourhoodId =
-            neighbourhoodId ?? this.neighbourhoodId,
-        neighbourhoodName: this.neighbourhoodName =
-            neighbourhoodName ?? this.neighbourhoodName,
-        street: this.street = street ?? this.street,
-        buildingNo: this.buildingNo = buildingNo ?? this.buildingNo,
-        apartmentNumber: this.apartmentNumber =
-            apartmentNumber ?? this.apartmentNumber,
-        floor: this.floor = floor ?? this.floor,
-        title: this.title = title ?? this.title,
-        description: this.description = description ?? this.description,
-        customerMobilId: this.customerMobilId =
-            customerMobilId ?? this.customerMobilId);
+        id: id ?? this.id,
+        countryId: countryId ?? this.countryId,
+        countryName: countryName ?? this.countryName,
+        provinceId: provinceId ?? this.provinceId,
+        provinceName: provinceName ?? this.provinceName,
+        districtId: districtId ?? this.districtId,
+        districtName: districtName ?? this.districtName,
+        neighbourhoodId: neighbourhoodId ?? this.neighbourhoodId,
+        neighbourhoodName: neighbourhoodName ?? this.neighbourhoodName,
+        street: street ?? this.street,
+        buildingNo: buildingNo ?? this.buildingNo,
+        apartmentNumber: apartmentNumber ?? this.apartmentNumber,
+        floor: floor ?? this.floor,
+        title: title ?? this.title,
+        description: description ?? this.description,
+        customerMobilId: customerMobilId ?? this.customerMobilId);
   }
 }

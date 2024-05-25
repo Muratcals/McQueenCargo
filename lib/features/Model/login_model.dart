@@ -4,12 +4,15 @@
 
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
+
 LoginModel loginModelFromJson(String str) =>
     LoginModel.fromJson(json.decode(str));
 
 String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
-class LoginModel {
+// ignore: must_be_immutable
+class LoginModel extends Equatable {
   int? id;
   String? name;
   String? surname;
@@ -51,4 +54,37 @@ class LoginModel {
         "birthDate": birthDate?.toIso8601String(),
         "createdDate": "",
       };
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+        surname,
+        tcNo,
+        numberPhone,
+        password,
+        email,
+        birthDate,
+      ];
+
+  LoginModel copyWith({
+    int? id,
+    String? name,
+    String? surname,
+    String? tcNo,
+    String? numberPhone,
+    String? password,
+    String? email,
+    DateTime? birthDate,
+  }) {
+    return LoginModel(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        surname: surname ?? this.surname,
+        tcNo: tcNo ?? this.tcNo,
+        numberPhone: numberPhone ?? this.numberPhone,
+        password: password ?? this.password,
+        email: email ?? this.email,
+        birthDate: birthDate ?? this.birthDate);
+  }
 }

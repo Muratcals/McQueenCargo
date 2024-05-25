@@ -4,13 +4,15 @@
 
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
+
 ReceiverAddressModel receiverAddressModelFromJson(String str) =>
     ReceiverAddressModel.fromJson(json.decode(str));
 
 String receiverAddressModelToJson(ReceiverAddressModel data) =>
     json.encode(data.toJson());
 
-class ReceiverAddressModel {
+class ReceiverAddressModel extends Equatable {
   int? id;
   String? nameSurname;
   String? email;
@@ -25,7 +27,7 @@ class ReceiverAddressModel {
   String? neighbourhoodName;
   String? street;
   String? buildingNo;
-  dynamic floor;
+  int? floor;
   String? apartmentNumber;
   String? title;
   String? description;
@@ -52,6 +54,49 @@ class ReceiverAddressModel {
     this.description,
     this.customerMobilId,
   });
+
+  ReceiverAddressModel copyWith(
+      {int? id,
+      String? nameSurname,
+      String? email,
+      String? numberPhone,
+      int? countryId,
+      String? countryName,
+      int? provinceId,
+      String? provinceName,
+      int? districtId,
+      String? districtName,
+      int? neighbourhoodId,
+      String? neighbourhoodName,
+      String? street,
+      String? buildingNo,
+      int? floor,
+      String? apartmentNumber,
+      String? title,
+      String? description,
+      int? customerMobilId}) {
+    return ReceiverAddressModel(
+      id: id ?? this.id,
+      nameSurname: nameSurname ?? this.nameSurname,
+      email: email ?? this.email,
+      numberPhone: numberPhone ?? this.numberPhone,
+      countryId: countryId ?? this.countryId,
+      countryName: countryName ?? this.countryName,
+      provinceId: provinceId ?? this.provinceId,
+      provinceName: provinceName ?? this.provinceName,
+      districtId: districtId ?? this.districtId,
+      districtName: districtName ?? this.districtName,
+      neighbourhoodId: neighbourhoodId ?? this.neighbourhoodId,
+      neighbourhoodName: neighbourhoodName ?? this.neighbourhoodName,
+      street: street ?? this.street,
+      buildingNo: buildingNo ?? this.buildingNo,
+      floor: floor ?? this.floor,
+      apartmentNumber: apartmentNumber ?? this.apartmentNumber,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      customerMobilId: customerMobilId ?? this.customerMobilId,
+    );
+  }
 
   factory ReceiverAddressModel.fromJson(Map<String, dynamic> json) =>
       ReceiverAddressModel(
@@ -96,4 +141,27 @@ class ReceiverAddressModel {
         "description": description,
         "customerMobilId": customerMobilId,
       };
+
+  @override
+  List<Object?> get props => [
+        id,
+        nameSurname,
+        email,
+        numberPhone,
+        countryId,
+        countryName,
+        provinceId,
+        provinceName,
+        districtId,
+        districtName,
+        neighbourhoodId,
+        neighbourhoodName,
+        street,
+        buildingNo,
+        floor,
+        apartmentNumber,
+        title,
+        description,
+        customerMobilId,
+      ];
 }
