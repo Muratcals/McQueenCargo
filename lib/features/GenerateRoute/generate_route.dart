@@ -7,7 +7,7 @@ import 'package:mc_queen_cargo/features/View/Splash/splash_screen_page.dart';
 class GenerateRoute {
   Route<dynamic>? generate(RouteSettings settings) {
     switch (settings.name) {
-      case "/": 
+      case "/":
         route(page: SplashScreen());
     }
   }
