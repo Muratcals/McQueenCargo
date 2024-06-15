@@ -28,13 +28,10 @@ class _ContactInformationPageState extends State<ContactInformationPage>
         resizeToAvoidBottomInset: true,
         appBar:
             PreferredSize(preferredSize: Size(30.w, 30.h), child: _AppBar()),
-        body: BlocProvider(
-          create: (context) => CreteCustomerState(),
-          child: _ContactInformationBody(
-            formKey: key,
-            eMail: eMail,
-            onPressed: () => onPressed(),
-          ),
+        body: _ContactInformationBody(
+          formKey: key,
+          eMail: eMail,
+          onPressed: () => onPressed(),
         ),
       ),
     );

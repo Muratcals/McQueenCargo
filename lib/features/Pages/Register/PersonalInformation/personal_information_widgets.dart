@@ -23,7 +23,7 @@ class _NameTextField extends StatelessWidget {
     return AtomicTextFormField(
       fontSize: 14.sp,
       onSaved: (newValue) {
-        context.read<CreteCustomerState>().changeName(newValue?.trim() ?? "") ;
+        context.read<CreteCustomerState>().changeValue(name: newValue?.trim() ?? "") ;
       },
       title: "Adınız",
       validator: (value) {
@@ -43,7 +43,7 @@ class _LastNameTextField extends StatelessWidget {
     return AtomicTextFormField(
       fontSize: 14.sp,
       onSaved: (newValue) {
-        context.read<CreteCustomerState>().changeSurname(newValue?.trim() ?? "") ;
+        context.read<CreteCustomerState>().changeValue(surname:  newValue?.trim() ?? "") ;
       },
       title: "Soyadınız",
       validator: (value) {
@@ -76,7 +76,7 @@ class _TcNumberTextField extends StatelessWidget {
         ),
       ),
       onSaved: (newValue) {
-        context.read<CreteCustomerState>().changeTcNo(newValue?.trim() ?? "") ;
+        context.read<CreteCustomerState>().changeValue(tcNo:  newValue?.trim() ?? "") ;
       },
       validator: (value) {
         if (value?.isEmpty == true) {
@@ -103,7 +103,7 @@ class _DateTimeField extends StatelessWidget {
       mode: DateTimeFieldPickerMode.date,
       onDateSelected: (value) {
         FocusScope.of(context).unfocus();
-        context.read<CreteCustomerState>().changeBirthDate(value);
+        context.read<CreteCustomerState>().changeValue(birthDate:  value);
       },
       decoration: InputDecoration(
         labelText: "Doğum Tarihi",

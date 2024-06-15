@@ -9,32 +9,29 @@ class _ContactInformationBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CreteCustomerState(),
-      child: Center(
-        child: Container(
-          margin: CustomPadding.onlyHorizontalInset(40),
-          child: Form(
-            key: formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: 15.h),
-                  _EMailTextField(eMail: eMail),
-                  SizedBox(height: 15.h),
-                  _EMailRepeatTextField(
-                    eMail: eMail,
-                  ),
-                  SizedBox(height: 15.h),
-                  _PhoneNumberTextField(),
-                  SizedBox(height: 15.h),
-                  AtomicOrangeButton(
-                      onPressed: () {
-                        onPressed();
-                      },
-                      title: "Devam Et")
-                ],
-              ),
+    return Center(
+      child: Container(
+        margin: CustomPadding.onlyHorizontalInset(40),
+        child: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 15.h),
+                _EMailTextField(eMail: eMail),
+                SizedBox(height: 15.h),
+                _EMailRepeatTextField(
+                  eMail: eMail,
+                ),
+                SizedBox(height: 15.h),
+                _PhoneNumberTextField(),
+                SizedBox(height: 15.h),
+                AtomicOrangeButton(
+                    onPressed: () {
+                      onPressed();
+                    },
+                    title: "Devam Et")
+              ],
             ),
           ),
         ),
@@ -64,7 +61,7 @@ class _EMailRepeatTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return AtomicTextFormField(
       onSaved: (newValue) {
-        context.read<CreteCustomerState>().changeEmail(newValue?.trim() ?? "");
+        context.read<CreteCustomerState>().changeValue(email:  newValue?.trim() ?? "");
       },
       title: "E-Posta Adresiniz (Tekrar)",
       validator: (value) {
@@ -113,7 +110,7 @@ class _PhoneNumberTextField extends StatelessWidget {
       onSaved: (newValue) {
         context
             .read<CreteCustomerState>()
-            .changeNumberPhone(newValue?.trim() ?? "");
+            .changeValue(numberPhone:  newValue?.trim() ?? "");
       },
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],

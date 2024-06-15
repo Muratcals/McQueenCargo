@@ -23,29 +23,26 @@ class _PasswordPageState extends State<PasswordPage> with PasswordPageMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(preferredSize: Size(30.w, 30.h), child: _AppBar()),
-      body: BlocProvider(
-        create: (context) => CreteCustomerState(),
-        child: Center(
-          child: Form(
-            key: key,
-            child: Container(
-              margin: CustomPadding.onlyHorizontalInset(40),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _PasswordTextField(password1: password1,),
-                    SizedBox(height: 15.h),
-                    _PasswordRepeatTextField(password1: password1,),
-                    SizedBox(height: 10.h),
-                    AtomicOrangeButton(
-                        onPressed: () {
-                          onPressed();
-                        },
-                        title: "Devam Et"),
-                  ],
-                ),
+      body: Center(
+        child: Form(
+          key: key,
+          child: Container(
+            margin: CustomPadding.onlyHorizontalInset(40),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _PasswordTextField(password1: password1,),
+                  SizedBox(height: 15.h),
+                  _PasswordRepeatTextField(password1: password1,),
+                  SizedBox(height: 10.h),
+                  AtomicOrangeButton(
+                      onPressed: () {
+                        onPressed();
+                      },
+                      title: "Devam Et"),
+                ],
               ),
             ),
           ),

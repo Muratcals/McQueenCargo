@@ -21,41 +21,40 @@ class _RegisterPageState extends State<RegisterPage> with RegisterMixin {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          appBar: PreferredSize(
-              preferredSize: Size(30.h, 30.h), child: _RegisterAppBar()),
-          body: BlocProvider(
-            create: (context) => CreteCustomerState(),
-            child: StackProgressWidget(
-              visibility: visibilty,
-              child: Container(
-                margin: CustomPadding.onlyHorizontalInset(50),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _RegisterPageColumnItems(
-                        number: "1",
-                        title: "Kişisel Bilgiler",
-                        incoming: incoming),
-                    SizedBox(height: 20.h),
-                    _RegisterPageColumnItems(
-                        number: "2", title: "E-Posta", incoming: incoming),
-                    SizedBox(height: 20.h),
-                    _RegisterPageColumnItems(
-                        number: "3", title: "Cep Telefonu", incoming: incoming),
-                    SizedBox(height: 20.h),
-                    AtomicOrangeButton(
-                        onPressed: () async {
-                          await buttonProcess();
-                        },
-                        title: incoming.contains("entry")
-                            ? "Başla"
-                            : "Üyeliği İşlemini Tamamla")
-                  ],
-                ),
-              ),
+        appBar: PreferredSize(
+            preferredSize: Size(30.h, 30.h), child: _RegisterAppBar()),
+        body: StackProgressWidget(
+          visibility: visibilty,
+          child: Container(
+            margin: CustomPadding.onlyHorizontalInset(50),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _RegisterPageColumnItems(
+                    number: "1",
+                    title: "Kişisel Bilgiler",
+                    incoming: incoming),
+                SizedBox(height: 20.h),
+                _RegisterPageColumnItems(
+                    number: "2", title: "E-Posta", incoming: incoming),
+                SizedBox(height: 20.h),
+                _RegisterPageColumnItems(
+                    number: "3", title: "Cep Telefonu", incoming: incoming),
+                SizedBox(height: 20.h),
+                AtomicOrangeButton(
+                    onPressed: () async {
+                      await buttonProcess(context);
+                      visibilty.value = false;
+                    },
+                    title: incoming.contains("entry")
+                        ? "Başla"
+                        : "Üyeliği İşlemini Tamamla")
+              ],
             ),
-          ),),
+          ),
+        ),
+      ),
     );
   }
 }

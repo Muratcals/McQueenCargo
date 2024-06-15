@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mc_queen_cargo/features/GenerateRoute/generate_route.dart';
 import 'package:mc_queen_cargo/features/Constants/GetCourierCubit/post_courier_cubit.dart';
+import 'package:mc_queen_cargo/features/Pages/Register/Controller/create_customer_cubit.dart';
 import 'package:mc_queen_cargo/main_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -21,8 +22,13 @@ void main() async {
               projectId: "mcqueencargo-858dd"))
       : Firebase.initializeApp();
   runApp(
-    BlocProvider(
-        create: (context) => GetCourierPostCubit(), child: const MainApp()),
+    MultiBlocProvider(providers: [
+       BlocProvider(
+        create: (context) => GetCourierPostCubit()),
+          BlocProvider(
+         create: (context)=> CreteCustomerState(),),
+    ], child: const MainApp())
+  
   );
 }
 

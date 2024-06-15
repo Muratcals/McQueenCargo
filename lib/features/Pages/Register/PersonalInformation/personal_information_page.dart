@@ -28,33 +28,30 @@ class _PersonalInformationPageState extends State<PersonalInformationPage>
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: PreferredSize(preferredSize: Size(30.w, 30.h), child: _AppBar()),
-      body: BlocProvider(
-        create: (context)=> CreteCustomerState(),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Container(
-              margin: CustomPadding.onlyHorizontalInset(40),
-              child: Form(
-                key: key,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _NameTextField(),
-                    SizedBox(height: 15.h),
-                    _LastNameTextField(),
-                    SizedBox(height: 15.h),
-                    _TcNumberTextField(),
-                    SizedBox(height: 15.h),
-                    _DateTimeField(),
-                    SizedBox(height: 15.h),
-                    AtomicOrangeButton(
-                        onPressed: () {
-                          onPressed();
-                        },
-                        title: "Devam Et")
-                  ],
-                ),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            margin: CustomPadding.onlyHorizontalInset(40),
+            child: Form(
+              key: key,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _NameTextField(),
+                  SizedBox(height: 15.h),
+                  _LastNameTextField(),
+                  SizedBox(height: 15.h),
+                  _TcNumberTextField(),
+                  SizedBox(height: 15.h),
+                  _DateTimeField(),
+                  SizedBox(height: 15.h),
+                  AtomicOrangeButton(
+                      onPressed: () {
+                        onPressed();
+                      },
+                      title: "Devam Et")
+                ],
               ),
             ),
           ),

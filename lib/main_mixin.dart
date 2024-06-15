@@ -3,6 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:mc_queen_cargo/features/Services/response_error.dart';
 
 import 'package:mc_queen_cargo/main.dart';
 
@@ -22,6 +23,8 @@ mixin MainAppMixin on State<MainApp> {
         ? visibility.value = false
         : visibility.value = true;
   }
+
+ 
 
   void connectionStream() {
     Connectivity().onConnectivityChanged.listen(

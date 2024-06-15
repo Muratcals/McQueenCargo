@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:mc_queen_cargo/features/GenerateRoute/generate_route.dart';
 import 'package:mc_queen_cargo/features/Services/services.dart';
 import 'package:flutter/material.dart';
@@ -17,14 +18,14 @@ mixin RegisterMixin on State<RegisterPage> {
     incoming = Get.arguments;
   }
 
-  Future<void> buttonProcess() async {
+  Future<void> buttonProcess(BuildContext buildContext) async {
     if (incoming.contains("entry")) {
       Get.toNamed(GenerateRoute.personalInformationPage);
     } else {
       visibilty.value = true;
-      await service
-          .createCustomer(context.read<CreteCustomerState>().state)
-          .then((value) {
+      var model = buildContext.read<CreteCustomerState>().state;
+      await service.createCustomer(model).then((value) {
+        EasyLoading.showToast("Kullanıcı başarıyla oluşturulmuştur");
         Get.toNamed(GenerateRoute.loginPage);
       }).onError((error, stackTrace) {});
       visibilty.value = false;

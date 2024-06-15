@@ -9,7 +9,7 @@ import 'package:mc_queen_cargo/features/GenerateRoute/generate_route.dart';
 import 'package:mc_queen_cargo/features/Model/address_model.dart';
 import 'package:mc_queen_cargo/features/Model/receiver_address_model.dart';
 import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
-import 'package:mc_queen_cargo/features/Pages/GetCourier/cubit/get_courier_cubit.dart';
+import 'package:mc_queen_cargo/features/Controllers/GetCourierCubit/get_courier_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:mc_queen_cargo/features/Constants/GetCourierCubit/post_courier_cubit.dart';
 import 'package:mc_queen_cargo/main_mixin.dart';

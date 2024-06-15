@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:mc_queen_cargo/features/Authorazation/token.dart';
 import 'package:mc_queen_cargo/features/Model/response_error_model.dart';
 import 'package:mc_queen_cargo/features/Services/response_error.dart';
@@ -37,7 +38,7 @@ class ServiceProcess {
         return Future.value(response.data);
       }
     } on DioException catch (err) {
-      throw _errorController(err, incoming);
+      _errorController(err, incoming);
     }
   }
 
@@ -87,12 +88,13 @@ class ServiceProcess {
     ResponseErrorModel model = ResponseErrorModel();
     if (err.response != null) {
       model.statusCode = err.response?.statusCode;
-      model.statusMessage = err.response?.data["Message"] ?? err.message;
+      model.statusMessage = err.response?.data ?? err.message;
       model.incoming = incoming;
     } else {
       model.statusCode = 500;
     }
-    ErrorResponse.streamController.sink.add(model);
+    var error = ErrorResponse.convertStatusCode(model);
+    EasyLoading.showToast(error.statusMessage!);
     return Future.error(err.response?.data["Message"] ?? err.message);
   }
 

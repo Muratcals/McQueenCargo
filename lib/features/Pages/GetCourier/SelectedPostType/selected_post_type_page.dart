@@ -12,7 +12,7 @@ import 'package:mc_queen_cargo/features/Model/address_model.dart';
 import 'package:mc_queen_cargo/features/Model/receiver_address_model.dart';
 import 'package:mc_queen_cargo/features/Services/services.dart';
 import 'package:mc_queen_cargo/features/UI/csutom_edge_insets.dart';
-import 'package:mc_queen_cargo/features/Pages/GetCourier/SelectedPostType/cubit/selected_post_type_cubit.dart';
+import 'package:mc_queen_cargo/features/Controllers/SelectedPostCubit/selected_post_type_cubit.dart';
 import 'package:mc_queen_cargo/features/Pages/GetCourier/SelectedPostType/selected_post_type_mixin.dart';
 import 'package:mc_queen_cargo/features/Pages/GetCourier/get_courier_information.dart';
 import 'package:mc_queen_cargo/features/Constants/GetCourierCubit/post_courier_cubit.dart';

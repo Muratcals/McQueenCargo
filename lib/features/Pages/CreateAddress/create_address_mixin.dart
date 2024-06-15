@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mc_queen_cargo/features/Authorazation/auth_id.dart';
 import 'package:mc_queen_cargo/features/Model/address_model.dart';
 import 'package:mc_queen_cargo/features/Model/receiver_address_model.dart';
-import 'package:mc_queen_cargo/features/Pages/CreateAddress/Controller/create_address_cubit/create_address_cubit.dart';
+import 'package:mc_queen_cargo/features/Controllers/CreateAddressCubit/create_address_cubit/create_address_cubit.dart';
 import 'package:mc_queen_cargo/features/Services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';

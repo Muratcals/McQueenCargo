@@ -22,7 +22,7 @@ class _PasswordTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return AtomicTextFormField(
       onSaved: (newValue) {
-        context.read<CreteCustomerState>().changePassword(newValue?.trim() ?? "");
+        context.read<CreteCustomerState>().changeValue( password:  newValue?.trim() ?? "");
       },
       onChanged: (value) {
         password1.value = value.trim();

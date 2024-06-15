@@ -13,8 +13,8 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> with SplashScreenMixin {
   @override
   void initState() {
-    super.initState();
-    getUser().then((value) {
+      super.initState();
+      getUser().then((value) {
       saveToken(
           accessToken: value.accessToken!, refreshToken: value.refreshToken!);
       AuthenticationToken.token = value.accessToken!;

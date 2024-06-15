@@ -6,7 +6,7 @@ import 'package:mc_queen_cargo/main_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'cubit/additional_service_cubit.dart';
+import '../../../Controllers/AdditionalServiceCubit/additional_service_cubit.dart';
 
 class FileAdditionalService extends StatefulWidget {
   const FileAdditionalService(

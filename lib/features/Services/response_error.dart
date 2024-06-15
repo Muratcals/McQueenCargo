@@ -109,7 +109,7 @@ class ErrorResponse {
           statusCode: HttpStatus.badRequest);
     } else if (model.statusCode == HttpStatus.unauthorized) {
       return ResponseErrorModel(
-          statusMessage: "Kullanıcı adı veya şifre yalnış",
+          statusMessage: "Kullanıcı adı veya şifre yanlış",
           statusTitle: "Hatalı Giriş",
           statusCode: HttpStatus.unauthorized);
     } else if (model.statusCode == HttpStatus.forbidden) {

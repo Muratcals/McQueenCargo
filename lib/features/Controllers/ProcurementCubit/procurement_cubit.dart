@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mc_queen_cargo/features/Pages/GetCourier/AddionatialService/ProcurementService/Cubit/procurement_state.dart';
+import 'package:mc_queen_cargo/features/Controllers/ProcurementCubit/procurement_state.dart';
 
 class ProcurementCubit extends Cubit<ProcurementState> {
   ProcurementCubit() : super(ProcurementInitial(0, 0));
