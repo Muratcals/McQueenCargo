@@ -1,45 +1,50 @@
-# McQueenCargo 📦
+# 📦 McQueenCargo – Gönderici Uygulaması
 
-**McQueenCargo**, McQueen kargo sistemi içerisinde **müşterilerin (göndericilerin)** kullanımına yönelik geliştirilmiş mobil uygulamadır. Bu uygulama sayesinde kullanıcılar, kargo süreçlerini dijital ortamda başlatabilir, takip edebilir ve kontrol edebilir.
-
-## 🔑 Özellikler
-
-- :contentReference[oaicite:1]{index=1}  
-  :contentReference[oaicite:2]{index=2}
-
-- 🔍 **Kargo Takip**  
-  :contentReference[oaicite:3]{index=3}
-
-- :contentReference[oaicite:4]{index=4}  
-  :contentReference[oaicite:5]{index=5}
-
-- 🔔 **Bildirimler**  
-  :contentReference[oaicite:6]{index=6}
-
-- 💳 **Ödeme Yönetimi**  
-  :contentReference[oaicite:7]{index=7}
-
-- :contentReference[oaicite:8]{index=8}  
-  :contentReference[oaicite:9]{index=9}
+**McQueenCargo**, McQueen kargo sisteminin gönderici (müşteri) tarafında çalışan mobil uygulamasıdır. Kullanıcılar bu uygulama sayesinde evlerinden çıkmadan kargo gönderme işlemlerini gerçekleştirebilir, fiyat hesaplaması yapabilir ve kurye çağırabilir.
 
 ---
 
-## 🛠️ Teknolojiler
+## 🚀 Özellikler
 
-- :contentReference[oaicite:10]{index=10}  
-- :contentReference[oaicite:11]{index=11}  
-- :contentReference[oaicite:12]{index=12}  
+### 📦 Kargo Gönderimi Oluşturma  
+Alıcı adresi, açıklama ve paket bilgileri girilerek hızlıca gönderi talebi oluşturulabilir.
+
+### 📍 Kurye Çağırma  
+Kargo alınacak adresi belirterek, kuryeyi doğrudan eve ya da ofise çağırabilirsiniz.
+
+### 💰 Fiyat Hesaplama  
+Gönderi oluşturma ekranında paket türüne ve teslimat adresine göre ücret otomatik olarak hesaplanır ve gösterilir.
+
+### 🔔 Anlık Bildirimler  
+Kurye ataması, gönderi alımı ve diğer önemli adımlar hakkında kullanıcıya bildirim gönderilir.
+
+### 💳 Ödeme İşlemleri  
+Gönderi ücreti uygulama içinden güvenli bir şekilde ödenebilir.
+
+### 📜 Gönderi Geçmişi  
+Önceden yapılmış tüm gönderiler geçmiş listesinde detaylarıyla birlikte görüntülenebilir.
+
+### 👤 Profil ve Adres Yönetimi  
+Kullanıcı bilgileri ve sık kullanılan adresler kayıt altına alınabilir ve düzenlenebilir.
 
 ---
 
-## 🎯 Amaç
+## 🛠️ Kullanılan Teknolojiler
 
-:contentReference[oaicite:13]{index=13} :contentReference[oaicite:14]{index=14}
+- **Flutter** – Mobil uygulama geliştirme
+- **Firebase** – Kimlik doğrulama, veritabanı, bildirim sistemi
+- **State Management** – GetX kullanılarak state management kullanımı 
 
 ---
 
-## 🚀 Kurulum & Başlangıç
+## 📦 Karşılıklı Entegrasyon
 
-1. Depoyu klonlayın:
+Bu uygulama, kargo teslimat tarafındaki kurye uygulaması olan [McQueenCourier](https://github.com/Muratcals/McQueenCourier) ile entegre çalışmaktadır. Gönderilen kargolar, kurye uygulaması üzerinden teslim alınır ve sistem otomatik senkronize şekilde ilerler.
+
+---
+
+## 🚀 Uygulamayı Başlatma
+
+1. Bu projeyi klonlayın:
    ```bash
    git clone https://github.com/Muratcals/McQueenCargo.git
