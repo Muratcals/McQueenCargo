@@ -1,45 +1,45 @@
-# McQueenCourier 🚚
+# McQueenCargo 📦
 
-**McQueenCourier**, McQueen kargo sistemi içerisinde **kuryelerin (teslimat görevlilerinin)** kullanımına yönelik geliştirilmiş mobil uygulamadır. Bu uygulama sayesinde kuryeler, teslimatlarını dijital olarak takip edip, durumlarını hızlıca güncelleyerek iş süreçlerini daha verimli hale getirir.
+**McQueenCargo**, McQueen kargo sistemi içerisinde **müşterilerin (göndericilerin)** kullanımına yönelik geliştirilmiş mobil uygulamadır. Bu uygulama sayesinde kullanıcılar, kargo süreçlerini dijital ortamda başlatabilir, takip edebilir ve kontrol edebilir.
 
 ## 🔑 Özellikler
 
-- 📋 **Teslimatlarım**  
-  Kuryeye atanan aktif teslimatlar, açık ve kullanıcı dostu bir listede görüntülenir.
+- :contentReference[oaicite:1]{index=1}  
+  :contentReference[oaicite:2]{index=2}
 
-- 📍 **Canlı Konum Takibi**  
-  Kurye, uygulamayı kullanırken konumu gerçek zamanlı olarak sisteme iletilir.
+- 🔍 **Kargo Takip**  
+  :contentReference[oaicite:3]{index=3}
 
-- ✅ **Teslimat Durumu Güncelleme**  
-  "Teslim edildi", "Teslim edilemedi" vb. durumlar kolayca seçilerek sistemde güncellenir.
-
-- ✍️ **İmza ile Onay**  
-  Alıcının imzası alınarak teslimat tamamlandığında sistemde kayıt edilir.
+- :contentReference[oaicite:4]{index=4}  
+  :contentReference[oaicite:5]{index=5}
 
 - 🔔 **Bildirimler**  
-  Yeni teslimat atamaları veya hatırlatmalar, push bildirimleri olarak kurye cihazına iletilir.
+  :contentReference[oaicite:6]{index=6}
 
-- 👤 **Kullanıcı Profili & Oturum Yönetimi**  
-  Kurye bilgileri görüntülenebilir, oturum açma/kapama işlemleri yapılabilir.
+- 💳 **Ödeme Yönetimi**  
+  :contentReference[oaicite:7]{index=7}
+
+- :contentReference[oaicite:8]{index=8}  
+  :contentReference[oaicite:9]{index=9}
 
 ---
 
 ## 🛠️ Teknolojiler
 
-- **Flutter** – Platformlar arası mobil geliştirme  
-- **Firebase** – Gerçek zamanlı veritabanı ve kullanıcı kimlik doğrulama  
-- **Google Maps API** – Harita gösterimi ve rota planlama
+- :contentReference[oaicite:10]{index=10}  
+- :contentReference[oaicite:11]{index=11}  
+- :contentReference[oaicite:12]{index=12}  
 
 ---
 
-## 🎯 Hedef
+## 🎯 Amaç
 
-McQueenCourier, kargo teslimat sürecini dijitalleştirerek kuryelerin iş akışlarını daha organize, izlenebilir ve zaman tasarruflu hale getirmeyi amaçlar. Ayrıca, müşteri tarafı uygulaması olan [McQueenCargo](https://github.com/Muratcals/McQueenCargo) ile sorunsuz bir şekilde entegre çalışır.
+:contentReference[oaicite:13]{index=13} :contentReference[oaicite:14]{index=14}
 
 ---
 
-## 🚀 Nasıl Başlanır?
+## 🚀 Kurulum & Başlangıç
 
-1. Bu depoyu klonlayarak alın:  
+1. Depoyu klonlayın:
    ```bash
-   git clone https://github.com/Muratcals/McQueenCourier.git
+   git clone https://github.com/Muratcals/McQueenCargo.git
