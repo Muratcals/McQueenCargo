@@ -1,6 +1,6 @@
 # 📦 McQueenCargo – Gönderici Uygulaması
 
-**McQueenCargo**, McQueen kargo sisteminin gönderici (müşteri) tarafında çalışan mobil uygulamasıdır. Kullanıcılar bu uygulama sayesinde evlerinden çıkmadan kargo gönderme işlemlerini gerçekleştirebilir, fiyat hesaplaması yapabilir ve kurye çağırabilir.
+**McQueenCargo**, McQueenCargo sisteminin gönderici (müşteri) tarafında çalışan mobil uygulamasıdır. Kullanıcılar bu uygulama sayesinde evlerinden çıkmadan kargo gönderme işlemlerini gerçekleştirebilir, fiyat hesaplaması yapabilir ve kurye çağırabilir.
 
 ---
 
